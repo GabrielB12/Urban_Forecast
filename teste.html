@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados do Google Sheets</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        .lixeira {
+            width: 50px;
+            height: 100px;
+            border: 2px solid #333;
+            border-radius: 5px;
+            margin: 10px 0;
+            position: relative;
+        }
+
+        .lixeira .nivel {
+            width: 100%;
+            background-color: green;
+            position: absolute;
+            bottom: 0;
+            text-align: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        .titulo {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dados do Google Sheets</h1>
+    <div id="lixeiras">
+        <div>
+            <p class="titulo">Lixeira 1 (D2)</p>
+            <div class="lixeira" id="lixeira-d"></div>
+        </div>
+        <div>
+            <p class="titulo">Lixeira 2 (H2)</p>
+            <div class="lixeira" id="lixeira-h"></div>
+        </div>
+        <div>
+            <p class="titulo">Lixeira 3 (L2)</p>
+            <div class="lixeira" id="lixeira-l"></div>
+        </div>
+    </div>
+    <table>
+        <thead>
+            <tr id="table-header"></tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+    </table>
+    <script>
+        const spreadsheetId = "1ZsOUdF7bzeW8IJ9J_Gn49Q4jJlVpj8984DU1bjNQNGI";
+        const range = "Página1!A1:M3";
+        const apiKey = "1c19af8ff98a6b1247a3853547c81d7005d68bdc";
+
+        const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                if (data.values) {
+                    const values = data.values;
+
+                    // Atualiza a tabela
+                    const tableHeader = document.getElementById("table-header");
+                    const tableBody = document.getElementById("table-body");
+
+                    // Cabeçalho da tabela
+                    values[0].forEach(header => {
+                        const th = document.createElement("th");
+                        th.textContent = header;
+                        tableHeader.appendChild(th);
+                    });
+
+                    // Corpo da tabela
+                    values.slice(1).forEach(row => {
+                        const tr = document.createElement("tr");
+                        row.forEach(cell => {
+                            const td = document.createElement("td");
+                            td.textContent = cell || "-";
+                            tr.appendChild(td);
+                        });
+                        tableBody.appendChild(tr);
+                    });
+
+                    // Atualiza as lixeiras
+                    const updateLixeira = (id, value) => {
+                        const lixeira = document.getElementById(id);
+                        const nivel = document.createElement("div");
+                        nivel.className = "nivel";
+                        nivel.style.height = `${value}%`;
+                        nivel.textContent = `${value}%`;
+                        lixeira.innerHTML = "";
+                        lixeira.appendChild(nivel);
+                    };
+
+                    // Valores das colunas D2, H2 e L2
+                    const colD2 = values[1][3] || 0; // D2
+                    const colH2 = values[1][7] || 0; // H2
+                    const colL2 = values[1][11] || 0; // L2
+
+                    updateLixeira("lixeira-d", colD2);
+                    updateLixeira("lixeira-h", colH2);
+                    updateLixeira("lixeira-l", colL2);
+                }
+            })
+            .catch(error => console.error("Erro ao carregar os dados:", error));
+    </script>
+</body>
+</html>
