@@ -79,7 +79,7 @@ tr:hover {
     background-color: green;
 }
 
-/* Melhorando a responsividade para dispositivos móveis */
+/* Melhorando a responsividade para dispositivos móveis  */
 @media (max-width: 768px) {
     table {
         width: 100%;
