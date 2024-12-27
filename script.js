@@ -14,6 +14,7 @@ function fetchSheetData() {
             const tbody = document.getElementById('table-body');
             const thead = document.querySelector('#data-table thead tr');
             const progressContainer = document.getElementById('progress-container');
+            const mapa = document.getElementById("mapa");
 
             if (sheetData && sheetData.length > 0) {
                 // Gerar cabeçalhos com base na primeira linha dos dados
@@ -48,9 +49,15 @@ function fetchSheetData() {
 
                 // Mostrar as barras de progresso apenas para as colunas D2, H2 e L2
                 const progressData = [
-                    { label: 'Nível de preenchimento da Lixeira 1', value: parseInt(sheetData[1][3]) }, // D2
-                    { label: 'Nível de preenchimento da Lixeira 2', value: parseInt(sheetData[1][7]) }, // H2
-                    { label: 'Nível de preenchimento da Lixeira 3', value: parseInt(sheetData[1][11]) } // L2
+                    { label: 'Nível de preenchimento da Lixeira 1', value: parseInt(sheetData[1][3]),
+                        iframe: `<div class="map-container"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3655.639369157598!2d-46.71143602440055!3d-23.61726317876141!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce50d611256955%3A0xd368108b420440ae!2sAv.%20Morumbi%2C%206340%20-%20Morumbi%2C%20S%C3%A3o%20Paulo%20-%20SP%2C%2005650-002!5e0!3m2!1spt-BR!2sbr!4v1735258963462!5m2!1spt-BR!2sbr" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>`
+                    }, // D2
+                    { label: 'Nível de preenchimento da Lixeira 2', value: parseInt(sheetData[1][7]), 
+                        iframe: `<div class="map-container"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3655.639369157598!2d-46.71143602440055!3d-23.61726317876141!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce50d611256955%3A0xd368108b420440ae!2sAv.%20Morumbi%2C%206340%20-%20Morumbi%2C%20S%C3%A3o%20Paulo%20-%20SP%2C%2005650-002!5e0!3m2!1spt-BR!2sbr!4v1735258963462!5m2!1spt-BR!2sbr" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>`
+                    }, // H2
+                    { label: 'Nível de preenchimento da Lixeira 3', value: parseInt(sheetData[1][11]),
+                        iframe: `<div class="map-container"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3655.639369157598!2d-46.71143602440055!3d-23.61726317876141!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce50d611256955%3A0xd368108b420440ae!2sAv.%20Morumbi%2C%206340%20-%20Morumbi%2C%20S%C3%A3o%20Paulo%20-%20SP%2C%2005650-002!5e0!3m2!1spt-BR!2sbr!4v1735258963462!5m2!1spt-BR!2sbr" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>`
+                     } // L2
                 ];
 
                 progressData.forEach(progress => {
@@ -86,6 +93,12 @@ function fetchSheetData() {
                     progressWrapper.appendChild(progressFill);
                     progressItem.appendChild(progressWrapper);
                     progressContainer.appendChild(progressItem);
+
+                    // Adicionar o iframe correspondente
+                    const iframeWrapper = document.createElement('div');
+                    iframeWrapper.innerHTML = progress.iframe;
+                    progressItem.appendChild(iframeWrapper);
+
                 });
             } else {
                 // Caso não haja dados
