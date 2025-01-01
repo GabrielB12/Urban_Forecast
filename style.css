@@ -6,9 +6,35 @@ body {
     background-color: #f4f4f4;
 }
 
-h1 {
-    text-align: center;
-    color: #333;
+#main-title {
+    font-family: 'Roboto', sans-serif;
+    font-size: 26px;
+    color: #4CAF50; /* Cor verde */
+    text-align: center; /* Alinhamento central */
+    text-transform: uppercase; /* Letras maiúsculas */
+    letter-spacing: 2px; /* Espaçamento entre letras */
+    margin-bottom: 20px; /* Margem inferior */
+    padding: 10px; /* Espaçamento interno */
+    background: linear-gradient(to right, #4CAF50, #ffffff); /* Gradiente suave */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: transform 0.3s ease; /* Transição suave no hover */
+}
+
+/* Efeito ao passar o mouse sobre o título */
+#main-title:hover {
+    transform: scale(1.1); /* Aumenta o título levemente */
+}
+
+#main-title a {
+    text-decoration: none; /* Remove o sublinhado */
+    color: inherit; /* Herda a cor do título */
+    font-weight: bold; /* Deixa o link em negrito */
+}
+
+/* Efeito ao passar o mouse sobre o link */
+#main-title a:hover {
+    color: #007e28; /* Cor laranja ao passar o mouse */
 }
 
 /* Estilo para a tabela */
@@ -112,3 +138,46 @@ tr:hover {
     border: 0;
 }
 
+/* Estilo do botão */
+#toggle-table-button {
+    background-color: #4CAF50; /* Cor de fundo verde */
+    border: none; /* Sem borda */
+    color: white; /* Cor do texto */
+    padding: 15px 32px; /* Espaçamento interno */
+    text-align: center; /* Alinhamento do texto */
+    text-decoration: none; /* Sem sublinhado */
+    display: inline-block; /* Para o botão se alinhar com outros elementos */
+    font-size: 16px; /* Tamanho da fonte */
+    margin: 10px 0; /* Margem ao redor do botão */
+    cursor: pointer; /* Cursor em forma de mão ao passar o mouse */
+    border-radius: 12px; /* Bordas arredondadas */
+    transition: background-color 0.3s ease; /* Transição suave de cor ao passar o mouse */
+  }
+  
+  /* Efeito ao passar o mouse sobre o botão */
+  #toggle-table-button:hover {
+    background-color: #45a049; /* Cor de fundo mais escura */
+  }
+  
+  /* Estilo da tabela */
+  #data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    display: none; /* Tabela começa escondida */
+  }
+  
+  /* Estilo das células da tabela */
+  #data-table td, #data-table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  /* Estilo do cabeçalho da tabela */
+  #data-table th {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  

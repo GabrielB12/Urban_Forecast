@@ -120,7 +120,31 @@ function fetchSheetData() {
             tr.appendChild(td);
             tbody.appendChild(tr);
         });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const table = document.getElementById('data-table');
+            const toggleButton = document.getElementById('toggle-table-button');
+        
+            toggleButton.addEventListener('click', () => {
+                if (table.style.display === 'none' || table.style.display === '') {
+                    table.style.display = 'table';
+                    toggleButton.textContent = 'Esconder Tabela';
+                } else {
+                    table.style.display = 'none';
+                    toggleButton.textContent = 'Mostrar Tabela detalhada';
+                }
+            });
+        });
+        
 }
 
 // Chama a função para carregar os dados quando a página for carregada
 fetchSheetData();
+
+
+// TODO: descomentar depois
+// const intervalo = 30*1000; // Tempo em milissegundos
+// // Função para recarregar a página a cada intervalo
+// setInterval(() => {
+//     location.reload(); // Recarrega a página
+// }, intervalo);
