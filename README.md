@@ -1,2 +1,2 @@
 # Site_Lixeira
-Site do projeto da Lixeira Inteligente
+Este repositório contém o código-fonte de um site desenvolvido para coletar e exibir dados de lixeiras inteligentes, um projeto que iniciei no meu TCC na Universidade Federal de São Paulo (UNIFESP) e que atualmente estou dando continuidade no meu mestrado. O objetivo do projeto é otimizar a gestão de resíduos urbanos por meio de lixeiras conectadas, capazes de enviar informações em tempo real sobre seu nível de ocupação, status e localização.
