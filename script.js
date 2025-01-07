@@ -49,13 +49,13 @@ function fetchSheetData() {
 
                 // Mostrar as barras de progresso apenas para as colunas D2, H2 e L2
                 const progressData = [
-                    { label: 'Nível de preenchimento da Lixeira 1', value: parseInt(sheetData[1][3]),
+                    { label: 'Nível disponível da Lixeira 1', value: parseInt(sheetData[1][3]),
                         iframe: `<div class="map-container"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.8046802636463!2d-46.70801542440279!3d-23.53952647881484!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce57d3f4c5cb03%3A0x2ba62731dd729c45!2sR.%20Cerro%20Cor%C3%A1%2C%20914%20-%20Vila%20Madalena%2C%20S%C3%A3o%20Paulo%20-%20SP%2C%2005061-100!5e0!3m2!1spt-BR!2sbr!4v1735338105438!5m2!1spt-BR!2sbr" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>`
                     }, // D2
-                    { label: 'Nível de preenchimento da Lixeira 2', value: parseInt(sheetData[1][7]), 
+                    { label: 'Nível disponível da Lixeira 2', value: parseInt(sheetData[1][7]), 
                         iframe: `<div class="map-container"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3655.639369157598!2d-46.71143602440055!3d-23.61726317876141!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce50d611256955%3A0xd368108b420440ae!2sAv.%20Morumbi%2C%206340%20-%20Morumbi%2C%20S%C3%A3o%20Paulo%20-%20SP%2C%2005650-002!5e0!3m2!1spt-BR!2sbr!4v1735258963462!5m2!1spt-BR!2sbr" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>`
                     }, // H2
-                    { label: 'Nível de preenchimento da Lixeira 3', value: parseInt(sheetData[1][11]),
+                    { label: 'Nível disponível da Lixeira 3', value: parseInt(sheetData[1][11]),
                         iframe: `<div class="map-container"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.9264544992843!2d-46.69150202440291!3d-23.535147478817784!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce57e76c43a29f%3A0xf828598be80d3dda!2sAv.%20Pomp%C3%A9ia%2C%201308%20-%20Pompeia%2C%20S%C3%A3o%20Paulo%20-%20SP%2C%2005022-001!5e0!3m2!1spt-BR!2sbr!4v1735338288220!5m2!1spt-BR!2sbr" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>`
                      } // L2
                 ];
