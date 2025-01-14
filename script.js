@@ -2,7 +2,7 @@ const SPREADSHEET_ID = '1ZsOUdF7bzeW8IJ9J_Gn49Q4jJlVpj8984DU1bjNQNGI';
 const RANGE = 'Página1!A1:M3';
 const API_KEY = 'AIzaSyDoBuWBVUo-PAY82kE41vhlVZaurmkOnnI';
 
-// Função para construir o cabeçalho da tabela
+// Cabeçalho da tabela
 function buildTableHeader(headers) {
     const thead = document.querySelector('#data-table thead tr');
     headers.forEach(header => {
@@ -12,7 +12,7 @@ function buildTableHeader(headers) {
     });
 }
 
-// Função para construir as linhas da tabela
+// Linhas da tabela
 function buildTableRows(sheetData) {
     const tbody = document.getElementById('table-body');
     sheetData.slice(1).forEach(row => {
@@ -36,7 +36,7 @@ function buildTableRows(sheetData) {
     });
 }
 
-// Função para criar as barras de progresso
+// Barras de progresso
 function buildProgressBars(sheetData) {
     const progressContainer = document.getElementById('progress-container');
     const progressData = [
@@ -51,7 +51,7 @@ function buildProgressBars(sheetData) {
     });
 }
 
-// Função para criar um item de progresso
+// Barras de progresso
 function createProgressItem(progress) {
     const progressItem = document.createElement('div');
     progressItem.classList.add('progress-item');
@@ -80,7 +80,7 @@ function createProgressItem(progress) {
     return progressItem;
 }
 
-// Função para definir a classe da barra de progresso
+// Definir progresso das barras
 function setProgressFillClass(progressFill, value) {
     if (value === 100) {
         progressFill.classList.add('progress-100');
@@ -91,7 +91,7 @@ function setProgressFillClass(progressFill, value) {
     }
 }
 
-// Função para gerar o iframe com base no índice
+// iframe(Mapa)
 function generateIframe(index) {
     const mapUrls = [
         "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.8046802636463!2d-46.70801542440279!3d-23.53952647881484!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce57d3f4c5cb03%3A0x2ba62731dd729c45!2sR.%20Cerro%20Cor%C3%A1%2C%20914%20-%20Vila%20Madalena%2C%20S%C3%A3o%20Paulo%20-%20SP%2C%2005061-100!5e0!3m2!1spt-BR!2sbr!4v1735338105438!5m2!1spt-BR!2sbr",
@@ -102,7 +102,7 @@ function generateIframe(index) {
 }
 
 
-// Função para mostrar o erro caso os dados não sejam encontrados
+// Verificação dos dados
 function showError() {
     const tbody = document.getElementById('table-body');
     const tr = document.createElement('tr');
@@ -113,7 +113,7 @@ function showError() {
     tbody.appendChild(tr);
 }
 
-// Função para carregar os dados da planilha
+// Carregar os dados da planilha - passa o id da planilha, o intervalo e a chave da API
 function fetchSheetData() {
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${RANGE}?key=${API_KEY}`;
 
@@ -135,7 +135,7 @@ function fetchSheetData() {
         });
 }
 
-// Função para configurar o botão de alternância da tabela
+// Botão de mostrar/esconder tabela
 function setupToggleButton() {
     const table = document.getElementById('data-table');
     const toggleButton = document.getElementById('toggle-table-button');
@@ -151,7 +151,7 @@ function setupToggleButton() {
     });
 }
 
-// Função principal que chama todas as outras
+// Função principal
 function init() {
     fetchSheetData();
     setupToggleButton();
@@ -160,6 +160,8 @@ function init() {
 // Chama a função para inicializar a página
 document.addEventListener('DOMContentLoaded', init);
 
+// TODO: descomentar depois
+// Definir tempo de recarregamento automático
 // const intervalo = 30*1000; // Tempo em milissegundos
 // // Função para recarregar a página a cada intervalo
 // setInterval(() => {

@@ -21,7 +21,7 @@ body {
     transition: transform 0.3s ease; /* Transição suave no hover */
 }
 
-/* Efeito ao passar o mouse sobre o título */
+/* Hover do título */
 #main-title:hover {
     transform: scale(1.1); /* Aumenta o título levemente */
 }
