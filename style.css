@@ -154,30 +154,48 @@ tr:hover {
     transition: background-color 0.3s ease; /* Transição suave de cor ao passar o mouse */
   }
   
-  /* Efeito ao passar o mouse sobre o botão */
-  #toggle-table-button:hover {
-    background-color: #45a049; /* Cor de fundo mais escura */
-  }
-  
-  /* Estilo da tabela */
-  #data-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    display: none; /* Tabela começa escondida */
-  }
-  
-  /* Estilo das células da tabela */
-  #data-table td, #data-table th {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-  }
-  
-  /* Estilo do cabeçalho da tabela */
-  #data-table th {
-    background-color: #4CAF50;
+/* Efeito ao passar o mouse sobre o botão */
+#toggle-table-button:hover {
+background-color: #45a049; /* Cor de fundo mais escura */
+}
+
+/* Estilo da tabela */
+#data-table {
+width: 100%;
+border-collapse: collapse;
+margin-top: 20px;
+display: none; /* Tabela começa escondida */
+}
+
+/* Estilo das células da tabela */
+#data-table td, #data-table th {
+border: 1px solid #ddd;
+padding: 8px;
+text-align: left;
+}
+
+/* Estilo do cabeçalho da tabela */
+#data-table th {
+background-color: #4CAF50;
+color: white;
+}
+
+/*Estilo do botão da rota otimizada*/
+.optimized-route-link {
+    display: inline-block;
+    padding: 8px 12px;
+    background-color: #73e375;
     color: white;
-  }
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out, transform 0.2s;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.optimized-route-link:hover {
+    background-color: #2bab00;
+    transform: scale(1.05);
+}
   
   

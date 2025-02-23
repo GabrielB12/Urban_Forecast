@@ -23,8 +23,9 @@ function buildTableRows(sheetData) {
             if (index === 12) {
                 const link = document.createElement('a');
                 link.href = cell;
-                link.textContent = 'Link para rota otimizada';
+                link.textContent = 'Rota otimizada';
                 link.target = '_blank';
+                link.classList.add('optimized-route-link'); // Adiciona a classe ao botão
                 td.appendChild(link);
             } else {
                 td.textContent = cell;
