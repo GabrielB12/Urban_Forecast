@@ -1,38 +1,35 @@
-<!DOCTYPE html>
-
+<!doctype html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lixeira Inteligente</title>
-    <link rel="icon" href="images/bin-icon.png" type="image/png">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lixeira Inteligente</title>
+  <link rel="icon" href="images/bin-icon.png" type="image/png">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
+  <main>
     <h1 id="main-title" title="Abrir a planilha no Google Sheets">
-        <a href="https://docs.google.com/spreadsheets/d/1ZsOUdF7bzeW8IJ9J_Gn49Q4jJlVpj8984DU1bjNQNGI/edit?gid=0#gid=0" target="_blank">Dados da Lixeira</a> 
-
+      <a href="https://docs.google.com/spreadsheets/d/1ZsOUdF7bzeW8IJ9J_Gn49Q4jJlVpj8984DU1bjNQNGI/edit?gid=0"
+         target="_blank" rel="noopener noreferrer">Dados da Lixeira</a>
     </h1>
 
-    <button id="toggle-table-button">Mostrar Tabela detalhada</button>
-    
-    <table id="data-table">
-        <thead>
-            <tr>
-                <!-- Colunas geradas com base na primeira linha de dados -->
-            </tr>
-        </thead>
-        <tbody id="table-body">
-            <!-- O conteúdo inserido via JavaScript -->
-        </tbody>
-    </table>
+    <div class="controls">
+      <button id="toggle-table-button" aria-expanded="true" aria-controls="table-wrap" type="button">Esconder Tabela</button>
+    </div>
+
+    <section id="table-wrap" class="table-wrap" aria-live="polite">
+      <!-- Mantemos apenas UMA tabela com id data-table -->
+      <table id="data-table" aria-describedby="toggle-table-button">
+        <thead><tr></tr></thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </section>
 
     <!-- Barras de progresso -->
-    <div class="progress-container" id="progress-container"></div>
+    <div class="progress-container" id="progress-container" aria-hidden="false"></div>
+  </main>
 
-    <div class="mapa" id="mapa"></div>
-
-    <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>

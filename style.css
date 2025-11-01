@@ -1,201 +1,169 @@
-/* Estilos básicos para a página */
+/* Reset / box sizing */
+*, *::before, *::after { box-sizing: border-box; }
+
+:root{
+  --green-600:#2e8b2e;
+  --green-500:#4CAF50;
+  --bg:#edf7ed;
+  --card-bg:#fff;
+  --muted:#666;
+  --border:#e6e6e6;
+}
+
+/* Body */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-    background-color: #edf7ed;
+  margin: 0;
+  padding: 16px;
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: #0b3d0b;
+  -webkit-font-smoothing:antialiased;
 }
 
+/* Title */
 #main-title {
-    font-family: 'Roboto', sans-serif;
-    font-size: 26px;
-    color: #4CAF50; /* Cor verde */
-    text-align: center; /* Alinhamento central */
-    text-transform: uppercase; /* Letras maiúsculas */
-    letter-spacing: 2px; /* Espaçamento entre letras */
-    margin-bottom: 20px; /* Margem inferior */
-    padding: 10px; /* Espaçamento interno */
-    background: linear-gradient(to right, #4CAF50, #ffffff); /* Gradiente suave */
-    border-radius: 8px; /* Bordas arredondadas */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    transition: transform 0.3s ease; /* Transição suave no hover */
+  margin: 0 0 12px 0;
+  padding: 12px;
+  background: linear-gradient(90deg,var(--green-500),#2ea44f);
+  color: #fff;
+  border-radius: 10px;
+  text-align: center;
+  font-weight:700;
+  letter-spacing:1px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
 }
+#main-title a { color: inherit; text-decoration: none; }
 
-/* Hover do título */
-#main-title:hover {
-    transform: scale(1.1); /* Aumenta o título levemente */
-}
-
-#main-title a {
-    text-decoration: none; /* Remove o sublinhado */
-    color: inherit; /* Herda a cor do título */
-    font-weight: bold; /* Deixa o link em negrito */
-}
-
-/* Efeito ao passar o mouse sobre o link */
-#main-title a:hover {
-    color: #007e28; /* Cor laranja ao passar o mouse */
-}
-
-/* Estilo para a tabela */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-th, td {
-    padding: 10px;
-    text-align: left;
-    border: 1px solid #ddd;
-}
-
-th {
-    background-color: green;
-    color: white;
-}
-
-tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-tr:hover {
-    background-color: #f1f1f1;
-}
-
-/* Estilo para as barras de progresso fora da tabela */
-.progress-container {
-    margin-top: 30px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.progress-item {
-    width: 30%;
-    margin-bottom: 10px;
-}
-
-.progress-bar {
-    width: 100%;
-    height: 20px;
-    background-color: #ddd;
-    border-radius: 10px;
-    margin-top: 10px;
-}
-
-.progress-fill {
-    height: 100%;
-    border-radius: 10px;
-    text-align: center;
-    color: white;
-    line-height: 20px; /* Para centralizar o texto verticalmente */
-}
-
-.progress-0 {
-    background-color: red;
-}
-
-.progress-50 {
-    background-color: orange;
-}
-
-.progress-100 {
-    background-color: green;
-}
-
-/* Melhorando a responsividade para dispositivos móveis  */
-@media (max-width: 768px) {
-    table {
-        width: 100%;
-        font-size: 14px;
-    }
-
-    th, td {
-        padding: 8px;
-    }
-
-    .progress-item {
-        width: 100%;
-    }
-}
-
-/* Definir a proporção de 16:9 para o iframe */
-.map-container {
-    position: relative;
-    width: 100%;
-    padding-top: 56.25%; /* Proporção 16:9 (altura:largura) */
-    height: 0;
-}
-
-.map-container iframe {
-    position: absolute;
-    top: 5%;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 0;
-}
-
-/* Estilo do botão */
+/* Controls */
+.controls { display:flex; justify-content:center; margin-top:12px; }
 #toggle-table-button {
-    background-color: #4CAF50; /* Cor de fundo verde */
-    border: none; /* Sem borda */
-    color: white; /* Cor do texto */
-    padding: 15px 32px; /* Espaçamento interno */
-    text-align: center; /* Alinhamento do texto */
-    text-decoration: none; /* Sem sublinhado */
-    display: inline-block; /* Para o botão se alinhar com outros elementos */
-    font-size: 16px; /* Tamanho da fonte */
-    margin: 10px 0; /* Margem ao redor do botão */
-    cursor: pointer; /* Cursor em forma de mão ao passar o mouse */
-    border-radius: 12px; /* Bordas arredondadas */
-    transition: background-color 0.3s ease; /* Transição suave de cor ao passar o mouse */
+  background: var(--green-500);
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-weight:700;
+  cursor: pointer;
+  width: 100%;
+  max-width: 360px;
+}
+#toggle-table-button:active { transform: translateY(1px); }
+#toggle-table-button:hover { background: #45a049; }
+
+/* Force hide (override media queries) */
+.hidden { display: none !important; }
+
+/* Table wrapper */
+.table-wrap {
+  margin-top: 16px;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 8px;
+  background: var(--card-bg);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  padding: 6px;
+}
+
+/* Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px;
+  font-size: 15px;
+}
+thead th {
+  background: var(--green-600);
+  color: #fff;
+  padding: 10px;
+  text-align: left;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  border-bottom: 2px solid var(--border);
+}
+tbody td {
+  padding: 10px;
+  border-bottom: 1px solid var(--border);
+}
+tbody tr:nth-child(even) { background: #fafafa; }
+tbody tr:hover { background: #f1fff1; }
+
+/* stacked table for small screens */
+@media (max-width: 600px) {
+  table { min-width: 0; width: 100%; }
+  thead { display: none; }
+  tbody tr {
+    display: block;
+    margin-bottom: 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px;
+    background: var(--card-bg);
   }
-  
-/* Efeito ao passar o mouse sobre o botão */
-#toggle-table-button:hover {
-background-color: #45a049; /* Cor de fundo mais escura */
+  tbody td {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 6px;
+    border-bottom: 1px dashed var(--border);
+  }
+  tbody tr td:last-child { border-bottom: none; }
+  tbody td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    margin-right: 12px;
+    color: var(--muted);
+    flex: 0 0 auto;
+  }
 }
 
-/* Estilo da tabela */
-#data-table {
-width: 100%;
-border-collapse: collapse;
-margin-top: 20px;
-display: none; /* Tabela começa escondida */
-}
-
-/* Estilo das células da tabela */
-#data-table td, #data-table th {
-border: 1px solid #ddd;
-padding: 8px;
-text-align: left;
-}
-
-/* Estilo do cabeçalho da tabela */
-#data-table th {
-background-color: #4CAF50;
-color: white;
-}
-
-/*Estilo do botão da rota otimizada*/
+/* optimized route link */
 .optimized-route-link {
-    display: inline-block;
-    padding: 8px 12px;
-    background-color: #73e375;
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 5px;
-    transition: background-color 0.3s ease-in-out, transform 0.2s;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  padding: 10px 12px;
+  background-color: #73e375;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
 }
 
-.optimized-route-link:hover {
-    background-color: #2bab00;
-    transform: scale(1.05);
+/* Progress */
+.progress-container {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: flex-start;
 }
-  
-  
+.progress-item {
+  background: var(--card-bg);
+  padding: 12px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  flex: 1 1 calc(33.333% - 10px);
+  min-width: 220px;
+}
+.progress-item .label { font-weight: 700; margin-bottom: 8px; font-size: 14px; }
+.progress-bar { width: 100%; height: 28px; background-color: #eee; border-radius: 18px; overflow: hidden; }
+.progress-fill { height: 100%; display: flex; align-items: center; justify-content: center; color: #fff; font-weight:700; min-width: 28px; }
+.progress-0 { background: #e04545; }
+.progress-50 { background: #f29a2e; }
+.progress-100 { background: #3aa04a; }
+
+/* map-inline placeholder */
+.map-inline { position: relative; width:100%; padding-top:56.25%; border-radius:8px; overflow:hidden; margin-top:12px; }
+.map-inline iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+
+/* buttons inside progress */
+.btn { padding: 10px 12px; border-radius: 8px; background: #2e7d2e; color: #fff; border: none; font-weight:700; cursor:pointer; }
+.btn.secondary { background: #1e73be; margin-left:8px; color:#fff; text-decoration:none; display:inline-block; text-align:center; }
+.btn.disabled { background:#999; opacity:0.7; pointer-events:none; }
+
+/* responsive tweak */
+@media (max-width: 768px) {
+  #main-title { font-size: 18px; padding: 10px; }
+  .progress-item { flex-basis: 100%; min-width: auto; }
+  .progress-bar { height: 36px; border-radius: 18px; }
+}
