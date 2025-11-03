@@ -1,9 +1,6 @@
-// esp8266_sketch.ino
-// Substitua os PLACEHOLDER abaixo:
-//   - SUPABASE_HOST    : "SEU_PROJETO.supabase.co" (sem https)
-//   - SUPABASE_ANON_KEY: chave anon do Supabase
-//   - SENSOR_ID        : id único para cada ESP (ex: "Lixeira-A1")
-// Atenção: não coloque a service_role key aqui.
+// esp8266_sketch_corrigido.ino
+// Mova o Serial.begin antes de qualquer Serial.print
+// Substitua SUPABASE_HOST / SUPABASE_ANON_KEY / SENSOR_ID se quiser
 
 #include <ESP8266WiFi.h>
 #include <WiFiClientSecure.h>
@@ -11,32 +8,46 @@
 const char* ssid = "Tricolor";
 const char* password = "trimundial";
 
-const char* SUPABASE_HOST = "SEU_PROJETO.supabase.co"; // <<-- substitua
+const char* SUPABASE_HOST = "zitresvvjiondhgiuqal.supabase.co";
 const int HTTPS_PORT = 443;
-const String SUPABASE_ANON_KEY = "SUA_ANON_KEY_AQUI";  // <<-- substitua
-const String SENSOR_ID = "Lixeira-A1";                // <<-- altere por dispositivo
+const String SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InppdHJlc3Z2amlvbmRoZ2l1cWFsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIxNTI2MjksImV4cCI6MjA3NzcyODYyOX0.Z_cBFBjyLF77pkVAnd5xMaNM7YX3bdZmqjMUOMZHI9k";
+const String SENSOR_ID = "Lixeira-A1";
 
 WiFiClientSecure client;
 
-// Pinos do HC-SR04 (ajuste conforme seu wiring)
-const int trigP = D4; // por exemplo D4 (GPIO2)
-const int echoP = D3; // D3 (GPIO0)
+// Pinos do HC-SR04 (use GPIO numbers: D4 -> 2, D3 -> 0)
+const int trigP = 2; // GPIO2
+const int echoP = 0; // GPIO0
 
 unsigned long lastSend = 0;
-const unsigned long SEND_INTERVAL = 5000; // ms (altere para 30000 ou mais em produção)
+const unsigned long SEND_INTERVAL = 5000; // ms
 
 void setup() {
   Serial.begin(115200);
-  delay(10);
+  delay(50);
+  
+  // LED interno sempre aceso
+  pinMode(LED_BUILTIN, OUTPUT);
+  digitalWrite(LED_BUILTIN, LOW);  // ACESO (ativo em LOW)
+
+  Serial.println();
+  Serial.println("Iniciando ESP8266 sketch (corrigido)");
+
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
+
   Serial.print("Conectando WiFi");
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
+  unsigned long start = millis();
+  while (WiFi.status() != WL_CONNECTED && millis() - start < 20000) {
+    delay(300);
     Serial.print(".");
   }
   Serial.println();
-  Serial.println("WiFi conectado: " + WiFi.localIP().toString());
+  if (WiFi.status() == WL_CONNECTED) {
+    Serial.println("WiFi conectado: " + WiFi.localIP().toString());
+  } else {
+    Serial.println("Falha ao conectar WiFi (timeout)");
+  }
 
   pinMode(trigP, OUTPUT);
   pinMode(echoP, INPUT);
@@ -46,15 +57,18 @@ void loop() {
   unsigned long now = millis();
   if (now - lastSend >= SEND_INTERVAL) {
     int distance = readDistance();
-    Serial.println("Distance: " + String(distance));
-    sendReading(distance);
+    Serial.println("Leitura (cm): " + String(distance));
+    if (distance >= 0) {
+      sendReading(distance);
+    } else {
+      Serial.println("Leitura inválida — pulando envio.");
+    }
     lastSend = now;
   }
 }
 
 int readDistance() {
   long duration;
-  int distanceCm;
   digitalWrite(trigP, LOW);
   delayMicroseconds(2);
   digitalWrite(trigP, HIGH);
@@ -65,19 +79,24 @@ int readDistance() {
   if (duration == 0) {
     return -1; // sem leitura válida
   }
-  distanceCm = duration * 0.034 / 2;
+  int distanceCm = duration * 0.034 / 2;
   return distanceCm;
 }
 
 void sendReading(int distance) {
   if (WiFi.status() != WL_CONNECTED) {
-    Serial.println("WiFi desconectado");
+    Serial.println("WiFi desconectado - não envio");
     return;
   }
 
-  client.setInsecure(); // OK para protótipo; para produção valide certificado
+  client.setInsecure(); // ok para protótipo
+  Serial.print("Conectando a ");
+  Serial.print(SUPABASE_HOST);
+  Serial.print(":");
+  Serial.println(HTTPS_PORT);
+
   if (!client.connect(SUPABASE_HOST, HTTPS_PORT)) {
-    Serial.println("Conexão HTTPS falhou");
+    Serial.println("Falha na conexão HTTPS");
     return;
   }
 
@@ -94,15 +113,40 @@ void sendReading(int distance) {
                "Connection: close\r\n\r\n" +
                body);
 
-  // ler headers
+  // Ler linha de status HTTP
+  String statusLine = client.readStringUntil('\n');
+  statusLine.trim();
+  if (statusLine.length() > 0) Serial.println("Status: " + statusLine);
+
+  // Ler headers até linha vazia
   while (client.connected()) {
-    String line = client.readStringUntil('\n');
-    if (line == "\r") break;
+    String header = client.readStringUntil('\n');
+    header.trim();
+    if (header.length() == 0) break;
   }
 
-  // ler corpo (opcional)
-  String resp = client.readString();
-  Serial.println("Resposta Supabase:");
-  Serial.println(resp);
+  // Ler corpo (com timeout)
+  String bodyResp;
+  unsigned long t0 = millis();
+  while (client.available() == 0 && millis() - t0 < 2000) delay(10);
+  while (client.available()) {
+    bodyResp += client.readString();
+  }
+
+  if (bodyResp.length() > 0) {
+    Serial.println("Corpo:");
+    Serial.println("==========");
+    Serial.println(bodyResp);
+    Serial.println("==========");
+  } else {
+    Serial.println("Nenhum corpo na resposta.");
+  }
+
+  if (statusLine.indexOf("200") >= 0 || statusLine.indexOf("201") >= 0) {
+    Serial.println("Envio OK.");
+  } else {
+    Serial.println("Envio falhou (veja status acima).");
+  }
+
   client.stop();
 }
