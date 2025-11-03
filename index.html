@@ -4,7 +4,181 @@
   <meta charset="utf-8" />
   <title>Monitor Lixeiras</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <link rel="stylesheet" href="style.css">
+  <style>
+    :root{
+      --bg: #f3fbf6;
+      --card: #e6f7ec;
+      --accent: #7fc79e;
+      --accent-600: #64b07f;
+      --muted: #6b6b6b;
+      --white: #ffffff;
+      --danger: #d9534f;
+      --radius: 12px;
+      --gap: 14px;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      font-size: 16px;
+    }
+
+    /* Reset e base */
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background: linear-gradient(180deg, var(--bg), #eefbf0);
+      color: #163b2a;
+      padding: 18px;
+      -webkit-font-smoothing:antialiased;
+    }
+
+    header{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+    h1{margin:0;font-size:20px}
+
+    .top-row{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-bottom:12px;
+    }
+
+    .control{
+      background:var(--card);
+      padding:8px 10px;
+      border-radius:12px;
+      display:flex;
+      gap:8px;
+      align-items:center;
+      box-shadow:0 2px 6px rgba(20,40,20,0.04);
+    }
+
+    select, button{
+      border: none;
+      padding:8px 10px;
+      border-radius:8px;
+      font-size:15px;
+      background:var(--white);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+
+    button.primary{
+      background: linear-gradient(180deg,var(--accent),var(--accent-600));
+      color: white;
+      font-weight:600;
+      cursor:pointer;
+    }
+
+    button.ghost{
+      background:transparent;
+      color:var(--accent-600);
+      border:1px solid rgba(100,160,120,0.12);
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 360px;
+      gap: var(--gap);
+      align-items:start;
+    }
+
+    .card{
+      background:var(--white);
+      padding:14px;
+      border-radius:var(--radius);
+      box-shadow: 0 8px 22px rgba(10,20,10,0.04);
+    }
+
+    /* tabela desktop */
+    table{ width:100%; border-collapse:collapse; font-size:14px; }
+    th, td { padding:10px 8px; text-align:left; border-bottom:1px solid #eef5ee; vertical-align: middle; }
+    thead th { color: #376c52; font-weight:700; font-size:13px; }
+    tbody tr:hover { background: #fbfdfb; }
+
+    .badge {
+      display:inline-block;
+      padding:6px 8px;
+      border-radius:8px;
+      color:white;
+      font-weight:600;
+      font-size:13px;
+    }
+    .badge.green { background:#5cb85c; }
+    .badge.orange { background:#f0ad4e; color:#2e2e2e; }
+    .badge.red { background:#d9534f; }
+
+    .actions { display:flex; gap:8px; }
+    .link-btn {
+      padding:6px 8px;
+      font-size:13px;
+      border-radius:8px;
+      border:1px solid rgba(0,0,0,0.06);
+      background:#fff;
+      cursor:pointer;
+    }
+
+    .small { font-size:13px; color:var(--muted); }
+
+    .side{ display:flex; flex-direction:column; gap:12px; }
+
+    .map-card{
+      height:300px;
+      border-radius:12px;
+      overflow:hidden;
+      background: linear-gradient(180deg,#f7fff9,#f1fff5);
+      border: 1px solid rgba(20,80,40,0.04);
+    }
+    iframe.map { width:100%; height:100%; border:0; display:block; }
+
+    .info-card{ background:var(--card); padding:12px; border-radius:10px; }
+
+    .no-address { display:flex; height:100%; align-items:center; justify-content:center; color:var(--muted); font-size:14px; }
+
+    /* ***** Responsivo: transformar tabela em cards em telas pequenas ***** */
+    @media (max-width:900px){
+      .grid{ grid-template-columns: 1fr; }
+      .map-card{ height:260px; }
+    }
+
+    @media (max-width:720px){
+      /* tornar a tabela responsiva: cada linha vira card */
+      table, thead, tbody, th, td, tr { display: block; }
+      thead { display: none; }
+      tbody { margin: 0; }
+      tr {
+        background: var(--white);
+        margin: 0 0 12px 0;
+        padding: 12px;
+        border-radius: 10px;
+        box-shadow: 0 6px 18px rgba(10,20,10,0.04);
+      }
+      td {
+        /* cada célula vira linha com label + value */
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 6px;
+        border: none;
+        font-size: 15px;
+      }
+      td::before {
+        content: attr(data-label);
+        color: var(--muted);
+        font-weight:600;
+        margin-right:8px;
+        width: 45%;
+        text-transform: none;
+      }
+      /* botão e ações ficam alinhados */
+      td.actions-cell { display:flex; gap:8px; justify-content:flex-end; }
+      .link-btn { padding:10px 12px; font-size:15px; border-radius:10px; }
+      .badge { padding:8px 10px; font-size:14px; }
+    }
+
+    /* ajustes gerais mobile */
+    @media (max-width:420px){
+      body{ padding:12px; font-size:15px; }
+      .top-row{ gap:8px; }
+      select, button{ padding:8px 10px; font-size:14px; }
+      .map-card{ height:220px; }
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -60,6 +234,151 @@
     </aside>
   </div>
 
-  <script src="script.js" defer></script>
+<script>
+/* Valores (substitua se necessário) */
+const SUPABASE_HOST = "https://zitresvvjiondhgiuqal.supabase.co";
+const ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InppdHJlc3Z2amlvbmRoZ2l1cWFsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIxNTI2MjksImV4cCI6MjA3NzcyODYyOX0.Z_cBFBjyLF77pkVAnd5xMaNM7YX3bdZmqjMUOMZHI9k";
+
+function mapEmbedUrlFor(address){
+  if(!address) return "";
+  return "https://www.google.com/maps?q=" + encodeURIComponent(address) + "&output=embed";
+}
+function mapOpenUrlFor(address){
+  if(!address) return "";
+  return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(address);
+}
+
+async function fetchData(sensor_id = "") {
+  let url = SUPABASE_HOST + "/rest/v1/v_distancias_com_fill?select=*&order=created_at.desc&limit=100";
+  if (sensor_id) url += "&sensor_id=eq." + encodeURIComponent(sensor_id);
+  const res = await fetch(url, {
+    headers: {
+      "apikey": ANON_KEY,
+      "Authorization": "Bearer " + ANON_KEY,
+      "Content-Type": "application/json"
+    }
+  });
+  if (!res.ok) {
+    console.error("Erro:", res.status, await res.text());
+    return [];
+  }
+  return await res.json();
+}
+
+async function populateSensorFilter(){
+  const url = SUPABASE_HOST + "/rest/v1/lixeiras?select=sensor_id,nome&order=nome";
+  const res = await fetch(url, {
+    headers: { "apikey": ANON_KEY, "Authorization": "Bearer " + ANON_KEY }
+  });
+  if (!res.ok) return;
+  const data = await res.json();
+  const sel = document.getElementById('sensorFilter');
+  sel.innerHTML = '<option value="">(Todos)</option>';
+  data.forEach(s => {
+    const opt = document.createElement('option');
+    opt.value = s.sensor_id;
+    opt.textContent = s.nome ? `${s.nome} (${s.sensor_id})` : s.sensor_id;
+    sel.appendChild(opt);
+  });
+}
+
+function clearMap(){
+  const c = document.getElementById('mapContainer');
+  c.innerHTML = '<div class="no-address" id="noAddressMsg">Selecione um sensor ou clique em "Ver mapa" em uma linha.</div>';
+}
+
+function showMapFor(address){
+  const c = document.getElementById('mapContainer');
+  if(!address){
+    clearMap();
+    return;
+  }
+  const url = mapEmbedUrlFor(address);
+  c.innerHTML = `<iframe class="map" src="${url}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`;
+}
+
+function updateTable(rows){
+  const tbody = document.querySelector("#dataTable tbody");
+  tbody.innerHTML = "";
+  const ordered = rows.slice(); // já vem do mais recente
+  for(const r of ordered){
+    const p = r.fill_percent;
+    const badgeClass = (p === null || p === undefined) ? 'badge green' : (p >= 80 ? 'badge red' : (p >= 50 ? 'badge orange' : 'badge green'));
+    const row = document.createElement('tr');
+
+    const enderecoText = r.endereco ? r.endereco : '—';
+
+    // Para responsividade: adicionamos data-label em cada td
+    row.innerHTML = `
+      <td data-label="Sensor">${r.sensor_id || ''}</td>
+      <td data-label="Nome">${r.nome || ''}</td>
+      <td data-label="Endereço" title="${enderecoText}" style="max-width:240px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${enderecoText}</td>
+      <td data-label="Distance">${r.distance}</td>
+      <td data-label="Preenchimento"><span class="${badgeClass}">${p === null ? '—' : p + '%'}</span></td>
+      <td data-label="Timestamp">${r.created_at ? new Date(r.created_at).toLocaleString() : ''}</td>
+      <td class="actions-cell" data-label="Ações">
+        <div class="actions">
+          <button class="link-btn" data-address="${encodeURIComponent(enderecoText)}">Ver mapa</button>
+          <button class="link-btn" data-open="${encodeURIComponent(enderecoText)}">Abrir no Maps</button>
+        </div>
+      </td>
+    `;
+
+    const btnMap = row.querySelector('button[data-address]');
+    btnMap.addEventListener('click', (ev) => {
+      const a = decodeURIComponent(ev.currentTarget.getAttribute('data-address'));
+      if(a && a !== '—') showMapFor(a);
+      else alert('Endereço não disponível para este registro.');
+    });
+
+    const btnOpen = row.querySelector('button[data-open]');
+    btnOpen.addEventListener('click', (ev) => {
+      const a = decodeURIComponent(ev.currentTarget.getAttribute('data-open'));
+      if(a && a !== '—') window.open(mapOpenUrlFor(a), '_blank');
+      else alert('Endereço não disponível para este registro.');
+    });
+
+    tbody.appendChild(row);
+  }
+}
+
+async function refresh(){
+  const sensor = document.getElementById('sensorFilter').value;
+  const data = await fetchData(sensor);
+  updateTable(data);
+}
+
+document.getElementById('refreshBtn').addEventListener('click', () => refresh());
+
+document.getElementById('sensorFilter').addEventListener('change', () => {
+  const sel = document.getElementById('sensorFilter');
+  const val = sel.value;
+  if(val){
+    (async ()=>{
+      const url = SUPABASE_HOST + "/rest/v1/lixeiras?select=endereco&sensor_id=eq." + encodeURIComponent(val) + "&limit=1";
+      const res = await fetch(url, { headers: { "apikey": ANON_KEY, "Authorization": "Bearer " + ANON_KEY }});
+      if(res.ok){
+        const arr = await res.json();
+        if(arr && arr.length > 0 && arr[0].endereco) showMapFor(arr[0].endereco);
+        else clearMap();
+      } else {
+        clearMap();
+      }
+    })();
+  } else {
+    clearMap();
+  }
+  refresh();
+});
+
+/* inicialização */
+populateSensorFilter().then(() => {
+  refresh();
+  clearMap();
+});
+
+/* polling */
+setInterval(refresh, 5000);
+</script>
 </body>
 </html>

@@ -3,8 +3,8 @@
    Coloque este arquivo na mesma pasta do index.html e styles.css.
 */
 
-const SUPABASE_HOST = "https://SEU_PROJETO.supabase.co"; // <<-- coloque seu host
-const ANON_KEY = "SUA_ANON_KEY"; // <<-- coloque sua anon key
+const SUPABASE_HOST = "https://zitresvvjiondhgiuqal.supabase.co";
+const ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InppdHJlc3Z2amlvbmRoZ2l1cWFsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIxNTI2MjksImV4cCI6MjA3NzcyODYyOX0.Z_cBFBjyLF77pkVAnd5xMaNM7YX3bdZmqjMUOMZHI9k";
 
 function mapEmbedUrlFor(address){
   if(!address) return "";
