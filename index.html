@@ -1,0 +1,140 @@
+<!-- index.html -->
+<!-- Substitua:
+     - SEU_PROJETO -> SEU_PROJETO (host supabase)
+     - SUA_ANON_KEY -> anon key do Supabase
+-->
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <title>Monitor Lixeiras</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 10px; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align:left; }
+    .badge { padding: 4px 8px; border-radius: 4px; color: white; font-weight:600; }
+  </style>
+</head>
+<body>
+  <h1>Monitor Lixeiras</h1>
+  <label for="sensorFilter">Filtrar por sensor:</label>
+  <select id="sensorFilter"><option value="">(Todos)</option></select>
+  <button id="refreshBtn">Atualizar</button>
+  <p>Últimos registros (limit 100)</p>
+
+  <canvas id="chart" width="800" height="300"></canvas>
+
+  <table id="dataTable">
+    <thead>
+      <tr>
+        <th>Sensor</th><th>Nome</th><th>Endereço</th><th>Distance (cm)</th><th>Preenchimento</th><th>Timestamp</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+<script>
+const SUPABASE_HOST = "https://SEU_PROJETO.supabase.co"; // <<-- substitua
+const ANON_KEY = "SUA_ANON_KEY"; // <<-- substitua
+
+async function fetchData(sensor_id = "") {
+  let url = SUPABASE_HOST + "/rest/v1/v_distancias_com_fill?select=*&order=created_at.desc&limit=100";
+  if (sensor_id) url += "&sensor_id=eq." + encodeURIComponent(sensor_id);
+  const res = await fetch(url, {
+    headers: {
+      "apikey": ANON_KEY,
+      "Authorization": "Bearer " + ANON_KEY,
+      "Content-Type": "application/json"
+    }
+  });
+  if (!res.ok) {
+    console.error("Erro:", res.status, await res.text());
+    return [];
+  }
+  return await res.json();
+}
+
+async function populateSensorFilter() {
+  const url = SUPABASE_HOST + "/rest/v1/lixeiras?select=sensor_id,nome&order=nome";
+  const res = await fetch(url, {
+    headers: { "apikey": ANON_KEY, "Authorization": "Bearer " + ANON_KEY }
+  });
+  if (!res.ok) return;
+  const data = await res.json();
+  const sel = document.getElementById('sensorFilter');
+  data.forEach(s => {
+    const opt = document.createElement('option');
+    opt.value = s.sensor_id;
+    opt.textContent = s.nome ? `${s.nome} (${s.sensor_id})` : s.sensor_id;
+    sel.appendChild(opt);
+  });
+}
+
+function colorForPercent(p) {
+  if (p === null || p === undefined) return "#999";
+  if (p >= 80) return "#d9534f";
+  if (p >= 50) return "#f0ad4e";
+  return "#5cb85c";
+}
+
+let chartInstance = null;
+function renderChart(labels, values, labelTitle) {
+  const ctx = document.getElementById('chart').getContext('2d');
+  if (chartInstance) chartInstance.destroy();
+  chartInstance = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: labelTitle || 'Preenchimento (%)',
+        data: values,
+        fill: false,
+        tension: 0.2
+      }]
+    },
+    options: {
+      scales: { y: { beginAtZero: true, max: 100 } }
+    }
+  });
+}
+
+function updateTableAndChart(rows) {
+  const tbody = document.querySelector("#dataTable tbody");
+  tbody.innerHTML = "";
+  const ordered = rows.slice().reverse(); // do mais antigo para o mais novo
+  const labels = [];
+  const values = [];
+  for (const r of ordered) {
+    const p = r.fill_percent;
+    const tr = document.createElement('tr');
+    const color = colorForPercent(p);
+    tr.innerHTML = `<td>${r.sensor_id || ''}</td>
+                    <td>${r.nome || ''}</td>
+                    <td>${r.endereco || ''}</td>
+                    <td>${r.distance}</td>
+                    <td><span class="badge" style="background:${color}">${p === null ? '—' : p + '%'}</span></td>
+                    <td>${new Date(r.created_at).toLocaleString()}</td>`;
+    tbody.appendChild(tr);
+
+    labels.push(new Date(r.created_at).toLocaleTimeString());
+    values.push(p === null ? null : p);
+  }
+
+  renderChart(labels, values, 'Preenchimento (%)');
+}
+
+async function refresh() {
+  const sensor = document.getElementById('sensorFilter').value;
+  const data = await fetchData(sensor);
+  updateTableAndChart(data);
+}
+
+document.getElementById('refreshBtn').addEventListener('click', refresh);
+document.getElementById('sensorFilter').addEventListener('change', refresh);
+
+populateSensorFilter().then(refresh);
+setInterval(refresh, 5000); // polling a cada 5s (ajuste se quiser)
+</script>
+</body>
+</html>
