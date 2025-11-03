@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
-  <title>Monitor Lixeiras</title>
+  <title>Lixeiras Inteligentes</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <style>
     :root{
@@ -182,7 +182,7 @@
 </head>
 <body>
   <header>
-    <h1>Monitor Lixeiras</h1>
+    <h1>Lixeiras Inteligentes</h1>
   </header>
 
   <div class="top-row">
@@ -204,9 +204,9 @@
               <th>Sensor</th>
               <th>Nome</th>
               <th>Endereço</th>
-              <th>Distance (cm)</th>
-              <th>Preenchimento</th>
-              <th>Timestamp</th>
+              <th>Distância medida</th>
+              <th>Nível de Preenchimento</th>
+              <th>Data/Hora</th>
               <th></th>
             </tr>
           </thead>
@@ -221,14 +221,14 @@
           <div style="width:12px;height:12px;border-radius:3px;background:var(--accent)"></div>
           <div>
             <div style="font-weight:700">Mini-mapa</div>
-            <div class="small">Clique em "Ver mapa" para centralizar no endereço da lixeira.</div>
+            <div class="small">Clique em "Ver mapa" para centralizar no endereço da lixeira selecionada.</div>
           </div>
         </div>
       </div>
 
       <div class="map-card card">
         <div id="mapContainer" style="width:100%;height:100%;">
-          <div class="no-address" id="noAddressMsg">Selecione um sensor ou clique em "Ver mapa" em uma linha.</div>
+          <div class="no-address" id="noAddressMsg">Selecione uma lixeira ou clique em "Ver mapa" em uma linha.</div>
         </div>
       </div>
     </aside>
@@ -273,7 +273,7 @@ async function populateSensorFilter(){
   if (!res.ok) return;
   const data = await res.json();
   const sel = document.getElementById('sensorFilter');
-  sel.innerHTML = '<option value="">(Todos)</option>';
+  sel.innerHTML = '<option value="">(Todas as lixeiras)</option>';
   data.forEach(s => {
     const opt = document.createElement('option');
     opt.value = s.sensor_id;
