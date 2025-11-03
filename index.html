@@ -3,66 +3,58 @@
 <head>
   <meta charset="utf-8" />
   <title>Monitor Lixeiras</title>
-
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <style>
     :root{
-      --bg: #f3fbf6;           /* verde pastel muito claro */
-      --card: #e6f7ec;         /* cartão */
-      --accent: #7fc79e;       /* verde principal */
+      --bg: #f3fbf6;
+      --card: #e6f7ec;
+      --accent: #7fc79e;
       --accent-600: #64b07f;
       --muted: #6b6b6b;
       --white: #ffffff;
       --danger: #d9534f;
-      --radius: 10px;
+      --radius: 12px;
       --gap: 14px;
       font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      font-size: 16px;
     }
 
+    /* Reset e base */
+    *{box-sizing:border-box}
     body{
       margin:0;
       background: linear-gradient(180deg, var(--bg), #eefbf0);
       color: #163b2a;
-      padding: 24px;
+      padding: 18px;
       -webkit-font-smoothing:antialiased;
     }
 
-    header{
-      display:flex;
-      gap:16px;
-      align-items:center;
-      margin-bottom:18px;
-    }
-
-    h1{
-      margin:0;
-      font-size:20px;
-      letter-spacing: -0.2px;
-    }
+    header{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+    h1{margin:0;font-size:20px}
 
     .top-row{
       display:flex;
       gap:12px;
       flex-wrap:wrap;
       align-items:center;
-      margin-bottom:18px;
+      margin-bottom:12px;
     }
 
     .control{
       background:var(--card);
-      padding:10px 12px;
+      padding:8px 10px;
       border-radius:12px;
-      box-shadow: 0 2px 6px rgba(20,40,20,0.04);
       display:flex;
       gap:8px;
       align-items:center;
+      box-shadow:0 2px 6px rgba(20,40,20,0.04);
     }
 
     select, button{
       border: none;
       padding:8px 10px;
       border-radius:8px;
-      font-size:14px;
+      font-size:15px;
       background:var(--white);
       box-shadow: 0 1px 3px rgba(0,0,0,0.06);
     }
@@ -87,14 +79,14 @@
       align-items:start;
     }
 
-    /* left - tabela card */
     .card{
       background:var(--white);
-      padding:16px;
+      padding:14px;
       border-radius:var(--radius);
-      box-shadow: 0 6px 18px rgba(10,20,10,0.04);
+      box-shadow: 0 8px 22px rgba(10,20,10,0.04);
     }
 
+    /* tabela desktop */
     table{ width:100%; border-collapse:collapse; font-size:14px; }
     th, td { padding:10px 8px; text-align:left; border-bottom:1px solid #eef5ee; vertical-align: middle; }
     thead th { color: #376c52; font-weight:700; font-size:13px; }
@@ -124,12 +116,8 @@
 
     .small { font-size:13px; color:var(--muted); }
 
-    /* right - mapa + info */
-    .side{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-    }
+    .side{ display:flex; flex-direction:column; gap:12px; }
+
     .map-card{
       height:300px;
       border-radius:12px;
@@ -137,30 +125,58 @@
       background: linear-gradient(180deg,#f7fff9,#f1fff5);
       border: 1px solid rgba(20,80,40,0.04);
     }
-    iframe.map {
-      width:100%;
-      height:100%;
-      border:0;
-      display:block;
-    }
-    .info-card{
-      background:var(--card);
-      padding:12px;
-      border-radius:10px;
-    }
+    iframe.map { width:100%; height:100%; border:0; display:block; }
 
-    .no-address {
-      display:flex;
-      height:100%;
-      align-items:center;
-      justify-content:center;
-      color:var(--muted);
-      font-size:14px;
-    }
+    .info-card{ background:var(--card); padding:12px; border-radius:10px; }
 
-    @media (max-width:980px){
+    .no-address { display:flex; height:100%; align-items:center; justify-content:center; color:var(--muted); font-size:14px; }
+
+    /* ***** Responsivo: transformar tabela em cards em telas pequenas ***** */
+    @media (max-width:900px){
       .grid{ grid-template-columns: 1fr; }
-      .map-card{ height:240px; }
+      .map-card{ height:260px; }
+    }
+
+    @media (max-width:720px){
+      /* tornar a tabela responsiva: cada linha vira card */
+      table, thead, tbody, th, td, tr { display: block; }
+      thead { display: none; }
+      tbody { margin: 0; }
+      tr {
+        background: var(--white);
+        margin: 0 0 12px 0;
+        padding: 12px;
+        border-radius: 10px;
+        box-shadow: 0 6px 18px rgba(10,20,10,0.04);
+      }
+      td {
+        /* cada célula vira linha com label + value */
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 6px;
+        border: none;
+        font-size: 15px;
+      }
+      td::before {
+        content: attr(data-label);
+        color: var(--muted);
+        font-weight:600;
+        margin-right:8px;
+        width: 45%;
+        text-transform: none;
+      }
+      /* botão e ações ficam alinhados */
+      td.actions-cell { display:flex; gap:8px; justify-content:flex-end; }
+      .link-btn { padding:10px 12px; font-size:15px; border-radius:10px; }
+      .badge { padding:8px 10px; font-size:14px; }
+    }
+
+    /* ajustes gerais mobile */
+    @media (max-width:420px){
+      body{ padding:12px; font-size:15px; }
+      .top-row{ gap:8px; }
+      select, button{ padding:8px 10px; font-size:14px; }
+      .map-card{ height:220px; }
     }
   </style>
 </head>
@@ -170,7 +186,7 @@
   </header>
 
   <div class="top-row">
-    <div class="control">
+    <div class="control" style="flex:1; min-width:220px;">
       <label for="sensorFilter" class="small" style="margin-right:8px">Filtrar por sensor</label>
       <select id="sensorFilter"><option value="">(Todos)</option></select>
       <button id="refreshBtn" class="primary" style="margin-left:8px">Atualizar</button>
@@ -181,7 +197,7 @@
   <div class="grid">
     <div class="card">
       <h3 style="margin-top:0;margin-bottom:8px">Últimos registros</h3>
-      <div style="overflow:auto; max-height:540px">
+      <div style="overflow:auto; max-height:64vh;">
         <table id="dataTable" aria-label="Tabela de leituras">
           <thead>
             <tr>
@@ -205,14 +221,13 @@
           <div style="width:12px;height:12px;border-radius:3px;background:var(--accent)"></div>
           <div>
             <div style="font-weight:700">Mini-mapa</div>
-            <div class="small">Clique em "Ver mapa" para centralizar o mini-mapa no endereço da lixeira.</div>
+            <div class="small">Clique em "Ver mapa" para centralizar no endereço da lixeira.</div>
           </div>
         </div>
       </div>
 
       <div class="map-card card">
         <div id="mapContainer" style="width:100%;height:100%;">
-          <!-- iframe será inserido aqui dinamicamente -->
           <div class="no-address" id="noAddressMsg">Selecione um sensor ou clique em "Ver mapa" em uma linha.</div>
         </div>
       </div>
@@ -220,30 +235,19 @@
   </div>
 
 <script>
-/* Substitua apenas se necessário (já estão com valores que você usou antes) */
+/* Valores (substitua se necessário) */
 const SUPABASE_HOST = "https://zitresvvjiondhgiuqal.supabase.co";
 const ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InppdHJlc3Z2amlvbmRoZ2l1cWFsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIxNTI2MjksImV4cCI6MjA3NzcyODYyOX0.Z_cBFBjyLF77pkVAnd5xMaNM7YX3bdZmqjMUOMZHI9k";
 
-/* --- helper --- */
 function mapEmbedUrlFor(address){
   if(!address) return "";
-  // usa q= para embed simples (sem API key)
   return "https://www.google.com/maps?q=" + encodeURIComponent(address) + "&output=embed";
 }
 function mapOpenUrlFor(address){
   if(!address) return "";
-  // abrir no Google Maps (mais amigável)
   return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(address);
 }
 
-function colorForPercentClass(p){
-  if (p === null || p === undefined) return 'badge green';
-  if (p >= 80) return 'badge red';
-  if (p >= 50) return 'badge orange';
-  return 'badge green';
-}
-
-/* --- fetch / UI logic --- */
 async function fetchData(sensor_id = "") {
   let url = SUPABASE_HOST + "/rest/v1/v_distancias_com_fill?select=*&order=created_at.desc&limit=100";
   if (sensor_id) url += "&sensor_id=eq." + encodeURIComponent(sensor_id);
@@ -269,7 +273,6 @@ async function populateSensorFilter(){
   if (!res.ok) return;
   const data = await res.json();
   const sel = document.getElementById('sensorFilter');
-  // limpa extras (exceto opção inicial)
   sel.innerHTML = '<option value="">(Todos)</option>';
   data.forEach(s => {
     const opt = document.createElement('option');
@@ -294,7 +297,6 @@ function showMapFor(address){
   c.innerHTML = `<iframe class="map" src="${url}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`;
 }
 
-/* atualizar tabela */
 function updateTable(rows){
   const tbody = document.querySelector("#dataTable tbody");
   tbody.innerHTML = "";
@@ -306,20 +308,22 @@ function updateTable(rows){
 
     const enderecoText = r.endereco ? r.endereco : '—';
 
+    // Para responsividade: adicionamos data-label em cada td
     row.innerHTML = `
-      <td>${r.sensor_id || ''}</td>
-      <td>${r.nome || ''}</td>
-      <td style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${enderecoText}">${enderecoText}</td>
-      <td>${r.distance}</td>
-      <td><span class="${badgeClass}">${p === null ? '—' : p + '%'}</span></td>
-      <td>${r.created_at ? new Date(r.created_at).toLocaleString() : ''}</td>
-      <td class="actions">
-        <button class="link-btn" data-address="${encodeURIComponent(enderecoText)}">Ver mapa</button>
-        <button class="link-btn" data-open="${encodeURIComponent(enderecoText)}">Abrir no Maps</button>
+      <td data-label="Sensor">${r.sensor_id || ''}</td>
+      <td data-label="Nome">${r.nome || ''}</td>
+      <td data-label="Endereço" title="${enderecoText}" style="max-width:240px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${enderecoText}</td>
+      <td data-label="Distance">${r.distance}</td>
+      <td data-label="Preenchimento"><span class="${badgeClass}">${p === null ? '—' : p + '%'}</span></td>
+      <td data-label="Timestamp">${r.created_at ? new Date(r.created_at).toLocaleString() : ''}</td>
+      <td class="actions-cell" data-label="Ações">
+        <div class="actions">
+          <button class="link-btn" data-address="${encodeURIComponent(enderecoText)}">Ver mapa</button>
+          <button class="link-btn" data-open="${encodeURIComponent(enderecoText)}">Abrir no Maps</button>
+        </div>
       </td>
     `;
 
-    // eventos nos botões
     const btnMap = row.querySelector('button[data-address]');
     btnMap.addEventListener('click', (ev) => {
       const a = decodeURIComponent(ev.currentTarget.getAttribute('data-address'));
@@ -338,24 +342,18 @@ function updateTable(rows){
   }
 }
 
-/* refresh */
 async function refresh(){
   const sensor = document.getElementById('sensorFilter').value;
   const data = await fetchData(sensor);
   updateTable(data);
 }
 
-/* initial load */
-document.getElementById('refreshBtn').addEventListener('click', () => {
-  refresh();
-});
+document.getElementById('refreshBtn').addEventListener('click', () => refresh());
 
 document.getElementById('sensorFilter').addEventListener('change', () => {
   const sel = document.getElementById('sensorFilter');
   const val = sel.value;
   if(val){
-    // tenta obter o endereço da lixeira selecionada e mostrar mapa automaticamente
-    // buscamos a lixeira específica via REST
     (async ()=>{
       const url = SUPABASE_HOST + "/rest/v1/lixeiras?select=endereco&sensor_id=eq." + encodeURIComponent(val) + "&limit=1";
       const res = await fetch(url, { headers: { "apikey": ANON_KEY, "Authorization": "Bearer " + ANON_KEY }});
@@ -370,7 +368,6 @@ document.getElementById('sensorFilter').addEventListener('change', () => {
   } else {
     clearMap();
   }
-
   refresh();
 });
 
