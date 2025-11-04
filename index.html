@@ -378,7 +378,7 @@ async function sendAlert(threshold = ALERT_THRESHOLD_DEFAULT) {
       mode: "no-cors",
       body: form.toString()
     });
-    alert("✅ Alerta enviado. Verifique o Apps Script (Executions / Logs) para confirmação.");
+    alert("✅ Alerta enviado. Verifique o e-mail cadastrado para obter a rota otimizada de coleta!");
   } catch (err) {
     console.error("sendAlert erro:", err);
     alert("Erro ao tentar enviar alerta: " + (err && err.message ? err.message : err));
