@@ -138,6 +138,69 @@ document.getElementById('sensorFilter').addEventListener('change', () => {
   refresh();
 });
 
+/* ===== CONFIG PARA CHAMAR O APPS SCRIPT (AJUSTE SE NECESSÁRIO) ===== */
+// URL do seu Web App (deploy -> Web app -> URL /exec)
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyQyVCEwUXy5JT7irpWE0orFPJhk6G5xwMF-79w9dU6g7PW5sljQOxTj8Ljx_lwNbPw/exec";
+// chave que seu Apps Script verifica (se estiver usando validação)
+const APPS_SCRIPT_KEY = "teste123";
+// Threshold padrão (pode passar outro ao chamar)
+const ALERT_THRESHOLD_DEFAULT = 70;
+/* ================================================================== */
+
+/**
+ * sendAlert(threshold)
+ * - Faz POST simples (form-encoded) para o Apps Script
+ * - Usa mode: "no-cors" para evitar preflight OPTIONS/405
+ * - NÃO permite ler a resposta do servidor (navegador bloqueia),
+ *   mas o Apps Script vai executar e você verá logs/executions no editor do Apps Script.
+ */
+async function sendAlert(threshold = ALERT_THRESHOLD_DEFAULT) {
+  // preparar payload (form-encoded)
+  const form = new URLSearchParams();
+  form.append("api_key", APPS_SCRIPT_KEY);
+  form.append("threshold", String(threshold));
+
+  // adiciona um timestamp opcional para debugging
+  form.append("client_ts", new Date().toISOString());
+
+  try {
+    // no-cors evita preflight OPTIONS, mas bloqueia leitura de resposta
+    await fetch(APPS_SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        // NÃO colocar Content-Type: application/json aqui, queremos form-encoded simples
+        // deixe o browser setar o content-type para application/x-www-form-urlencoded;charset=UTF-8
+      },
+      body: form.toString()
+    });
+
+    // Aviso amigável ao usuário
+    alert("✅ Alerta enviado. O servidor (Apps Script) deve processar e enviar os emails. Verifique os logs no Apps Script se necessário.");
+  } catch (err) {
+    // normalmente não chega aqui em no-cors, mas deixo fallback
+    console.error("Erro ao enviar alerta:", err);
+    alert("Erro ao tentar enviar alerta: " + (err && err.message ? err.message : err));
+  }
+}
+
+/* --- anexa listener no botão --- */
+document.addEventListener("DOMContentLoaded", () => {
+  const sendBtn = document.getElementById("sendAlertBtn");
+  if (sendBtn) {
+    sendBtn.addEventListener("click", () => {
+      // opcional: pegar threshold de entrada do usuário; aqui usa padrão 70
+      sendBtn.disabled = true;
+      const original = sendBtn.textContent;
+      sendBtn.textContent = "Enviando...";
+      sendAlert(ALERT_THRESHOLD_DEFAULT).finally(() => {
+        setTimeout(() => { sendBtn.disabled = false; sendBtn.textContent = original; }, 1200);
+      });
+    });
+  }
+});
+
+
 /* inicialização */
 populateSensorFilter().then(() => {
   refresh();
