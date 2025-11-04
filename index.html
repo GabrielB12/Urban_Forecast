@@ -203,7 +203,7 @@
         <table id="dataTable" aria-label="Tabela de leituras">
           <thead>
             <tr>
-              <th>Sensor</th>
+              <th>Lixeira</th>
               <th>Nome</th>
               <th>Endereço</th>
               <th>Distância medida</th>
@@ -323,7 +323,7 @@ function updateTable(rows){
     const enderecoText = r.endereco ? r.endereco : '—';
 
     row.innerHTML = `
-      <td data-label="Sensor">${r.sensor_id || ''}</td>
+      <td data-label="Lixeira">${r.sensor_id || ''}</td>
       <td data-label="Nome">${r.nome || ''}</td>
       <td data-label="Endereço" title="${enderecoText}" style="max-width:240px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${enderecoText}</td>
       <td data-label="Distância Medida">${r.distance || ''}</td>
