@@ -188,7 +188,7 @@
 
   <div class="top-row">
     <div class="control" style="flex:1; min-width:220px;">
-      <label for="sensorFilter" class="small" style="margin-right:8px">Filtrar por sensor</label>
+      <label for="sensorFilter" class="small" style="margin-right:8px">Filtrar por lixeira</label>
       <select id="sensorFilter"><option value="">(Todos)</option></select>
       <button id="refreshBtn" class="primary" style="margin-left:8px">Atualizar</button>
       <button id="sendAlertBtn" class="primary" style="margin-left:8px">Enviar Alerta</button>
@@ -326,9 +326,9 @@ function updateTable(rows){
       <td data-label="Sensor">${r.sensor_id || ''}</td>
       <td data-label="Nome">${r.nome || ''}</td>
       <td data-label="Endereço" title="${enderecoText}" style="max-width:240px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${enderecoText}</td>
-      <td data-label="Distance">${r.distance || ''}</td>
-      <td data-label="Preenchimento"><span class="${badgeClass}">${p === null ? '—' : p + '%'}</span></td>
-      <td data-label="Timestamp">${r.created_at ? new Date(r.created_at).toLocaleString() : ''}</td>
+      <td data-label="Distância Medida">${r.distance || ''}</td>
+      <td data-label="Preenchimento da Lixeira"><span class="${badgeClass}">${p === null ? '—' : p + '%'}</span></td>
+      <td data-label="Data/Hora">${r.created_at ? new Date(r.created_at).toLocaleString() : ''}</td>
       <td class="actions-cell" data-label="Ações">
         <div class="actions">
           <button class="link-btn" data-address="${encodeURIComponent(enderecoText)}">Ver mapa</button>
