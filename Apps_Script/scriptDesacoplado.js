@@ -230,3 +230,23 @@ function escapeHtml(str) {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
 }
+
+/**
+ * doPost: wrapper que recebe POSTs do front-end e chama envioEmailRota(threshold)
+ * Aceita body form-encoded (application/x-www-form-urlencoded) ou JSON.
+ * Espera api_key no body (ou e.parameter.api_key).
+ */
+function doPost(e) {
+  try {
+    envioEmailRota();
+  } catch (err) {
+    Logger.log("doPost wrapper error: %s", err && err.toString ? err.toString() : JSON.stringify(err));
+    return ContentService.createTextOutput(JSON.stringify({ error: String(err) })).setMimeType(ContentService.MimeType.JSON).setCode(500);
+  }
+}
+
+// opcional: responder OPTIONS para preflight (não evita 405 se Web App não aceitar)
+function doOptions(e) {
+  return ContentService.createTextOutput('').setMimeType(ContentService.MimeType.JSON);
+}
+
