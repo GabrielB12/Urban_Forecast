@@ -94,7 +94,7 @@ function updateTable(rows){
     const createdAtRaw = r.created_at || '';
 
     row.innerHTML = `
-      <td data-label="Sel">
+      <td data-label="Selecionar">
         <input type="checkbox" class="row-select" data-sensor="${encodeURIComponent(r.sensor_id || '')}" data-created="${encodeURIComponent(createdAtRaw)}" />
       </td>
       <td data-label="Lixeira">${r.sensor_id || ''}</td>
