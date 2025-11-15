@@ -18,6 +18,9 @@
       <select id="sensorFilter"><option value="">(Todos)</option></select>
       <button id="refreshBtn" class="primary" style="margin-left:8px">Atualizar</button>
       <button id="sendAlertBtn" class="primary" style="margin-left:8px">Enviar Alerta</button>
+
+      <button id="deleteSelectedBtn" class="primary" style="margin-left:8px">Remover selecionados</button>
+      <button id="deleteAllBtn" class="primary" style="margin-left:8px">Remover todas as leituras</button>
     </div>
     <div style="margin-left:auto" class="small">Atualização automática a cada 5s</div>
   </div>
@@ -29,6 +32,7 @@
         <table id="dataTable" aria-label="Tabela de leituras">
           <thead>
             <tr>
+              <th></th>
               <th>Lixeira</th>
               <th>Nome</th>
               <th>Endereço</th>
