@@ -182,3 +182,64 @@
     .map-card{ height:220px; }
   }
   
+  /* ---------- Forçar que os botões 'below' sempre fiquem em uma nova linha (mesma .control) ---------- */
+
+.control {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    /* garante comportamento previsível */
+  }
+  
+  /* Pseudo-elemento para forçar quebra: ocupa 100% de largura após os elementos 'fixos' */
+  .control::after {
+    content: "";
+    flex-basis: 100%;
+    height: 0;
+    order: 1; /* fica entre os elementos com order 0 e os com order 2 */
+    pointer-events: none;
+  }
+  
+  /* Itens fixos (primeira linha): label, select, Atualizar, Enviar Alerta */
+  .control .fixed {
+    order: 0;         /* aparecem antes do pseudo-break */
+    flex: 0 0 auto;   /* largura pelo conteúdo */
+    white-space: nowrap;
+  }
+  
+  /* Itens que devem ficar abaixo (sempre): os novos botões */
+  .control .below {
+    order: 2;         /* aparecem depois do pseudo-break */
+    flex: 0 1 auto;   /* largura ditada pelo conteúdo (não expandem para 100%) */
+    white-space: nowrap;
+    padding: 6px 10px; /* compacto */
+    border-radius: 8px;
+  }
+  
+  /* Tornar botões compactos: tamanho das bordas depende do texto */
+  .control .below,
+  .control .fixed {
+    /* remove margens inline problemáticas e padroniza */
+    margin-left: 0 !important;
+  }
+  
+  /* Garanta que os botões .primary mantenham aparência, mas não cresçam demais */
+  .control .primary {
+    padding: 6px 10px;
+    font-size: 15px;
+  }
+  
+  /* Em telas muito estreitas: permitir que os dois botões abaixo fiquem lado a lado (cada um com até 48%) ou individual por linha */
+  @media (max-width: 480px) {
+    .control .below {
+      flex-basis: 48%;
+    }
+  }
+  
+  /* se preferir que, em telas ultra estreitas, fiquem um por linha:
+  @media (max-width: 360px) {
+    .control .below { flex-basis: 100%; }
+  }
+  */
+  
