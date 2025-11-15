@@ -148,6 +148,7 @@ function envioEmailRota(threshold) {
     } else {
       var origin = BASE_ADDRESS;
       var destination = BASE_ADDRESS;
+      // TODO: precisa arrumar esse optimize aqui!! (tlvez apenas remover)
       var joined = 'optimize:true|' + waypoints.join('|');
       var waypointsParam = '&waypoints=' + encodeURIComponent(joined);
       routeUrl = 'https://www.google.com/maps/dir/?api=1'
