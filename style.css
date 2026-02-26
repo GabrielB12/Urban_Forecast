@@ -236,6 +236,41 @@
       flex-basis: 48%;
     }
   }
+
+  .forecast-card {
+    background: var(--card); /* mesmo verde claro dos controles */
+    border-radius: var(--radius);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .forecast-header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .forecast-header h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #1f4d38;
+  }
+  
+  #previsaoBox {
+    background: var(--white);
+    padding: 10px;
+    border-radius: 8px;
+    min-height: 40px;
+  
+    display: flex;
+    flex-direction: column;   /* 👈 agora fica um em cima do outro */
+    align-items: flex-start;  /* 👈 alinha à esquerda */
+    gap: 6px;                 /* 👈 espaço entre linhas */
+  
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    color: #244c3a;
+  }
   
   /* se preferir que, em telas ultra estreitas, fiquem um por linha:
   @media (max-width: 360px) {
