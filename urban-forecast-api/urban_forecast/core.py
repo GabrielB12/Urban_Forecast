@@ -47,21 +47,20 @@ def compute_previsao(df: pd.DataFrame, threshold: float = 90):
 def gerar_resumo_ia(resultado: dict) -> str:
     try:
         client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY", ""))
-        
         prompt = f"""Você é um assistente de monitoramento de lixeiras urbanas.
 Com base nos dados abaixo, gere um resumo curto e direto (2-3 frases) em português sobre o estado da lixeira e quando deve ser coletada.
-
 Nível atual: {resultado['nivel_atual']}%
 Taxa de enchimento: {resultado['taxa_media']:.2f}% por hora
 Horas restantes até atingir o limite: {resultado['horas_restantes']:.1f}h
 Data estimada para coleta: {resultado['data_prevista']}
-
 Seja objetivo e útil para o operador de coleta."""
 
         response = client.models.generate_content(
-            model="gemini-2.0-flash",
+            model="gemini-2.0-flash-lite",
             contents=prompt
         )
+        print("GEMINI response:", response)         # <-- log
+        print("GEMINI text:", response.text)        # <-- log
         return response.text
     except Exception as e:
         print("ERRO gerar_resumo_ia:", type(e).__name__, str(e))
