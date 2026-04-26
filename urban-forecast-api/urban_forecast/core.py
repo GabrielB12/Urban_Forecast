@@ -52,7 +52,7 @@ def compute_previsao(df: pd.DataFrame, threshold: float = 90):
 
 def gerar_resumo_ia(resultado: dict) -> str:
     try:
-        genai.configure(api_key=os.environ["GEMINI_API_KEY"])
+        genai.configure(api_key=os.environ.get("GEMINI_API_KEY", ""))
         model = genai.GenerativeModel("gemini-1.5-flash")
         
         prompt = f"""Você é um assistente de monitoramento de lixeiras urbanas.
@@ -68,5 +68,5 @@ Seja objetivo e útil para o operador de coleta."""
         response = model.generate_content(prompt)
         return response.text
     except Exception as e:
-        print("Erro gerar_resumo_ia:", e)
+        print("ERRO gerar_resumo_ia:", type(e).__name__, str(e))  # <-- log detalhado
         return None
