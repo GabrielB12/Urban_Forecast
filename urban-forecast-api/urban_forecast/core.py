@@ -59,7 +59,7 @@ Com base nos dados abaixo, gere um resumo curto e direto (2-3 frases) em portugu
 Nível atual: {resultado['nivel_atual']}%
 Taxa de enchimento: {resultado['taxa_media']:.2f}% por hora
 Horas restantes até atingir o limite: {resultado['horas_restantes']:.1f}h
-Data estimada para coleta: {resultado['data_prevista']}
+Data estimada para coleta: {data_formatada} (horário de Brasília)
 
 Seja objetivo e útil para o operador de coleta."""
 
