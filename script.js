@@ -341,69 +341,6 @@ function safeAttachListeners() {
   }
 }
 
-// async function fetchPrevisao(sensor) {
-
-//     const box = document.getElementById("previsaoBox");
-  
-//     if (!sensor) {
-//       box.innerHTML = "Selecione uma lixeira para ver previsão.";
-//       return;
-//     }
-  
-//     try {
-  
-//       await fetch(SUPABASE_HOST + "/rest/v1/rpc/calcular_previsao", {
-//         method: "POST",
-//         headers: {
-//           "apikey": ANON_KEY,
-//           "Authorization": "Bearer " + ANON_KEY,
-//           "Content-Type": "application/json"
-//         },
-//         body: JSON.stringify({
-//           sensor: sensor,
-//           threshold_input: 90
-//         })
-//       });
-  
-//       const res = await fetch(
-//         SUPABASE_HOST + "/rest/v1/previsoes?select=*&sensor_id=eq." +
-//         encodeURIComponent(sensor) +
-//         "&order=created_at.desc&limit=1",
-//         {
-//           headers: {
-//             "apikey": ANON_KEY,
-//             "Authorization": "Bearer " + ANON_KEY
-//           }
-//         }
-//       );
-  
-//       if (!res.ok) {
-//         box.innerHTML = "Erro ao buscar previsão.";
-//         return;
-//       }
-  
-//       const data = await res.json();
-  
-//       if (!data.length) {
-//         box.innerHTML = "Sem dados suficientes para previsão.";
-//         return;
-//       }
-  
-//       const p = data[0];
-  
-//       box.innerHTML = `
-//         <b>Nível atual:</b> ${p.nivel_atual}%<br>
-//         <b>Taxa média:</b> ${Number(p.taxa_media).toFixed(2)}%/h<br>
-//         <b>Horas restantes:</b> ${Number(p.horas_restantes).toFixed(2)}h<br>
-//         <b>Data estimada:</b> ${new Date(p.data_prevista).toLocaleString()}
-//       `;
-  
-//     } catch (err) {
-//       box.innerHTML = "Erro ao calcular previsão.";
-//       console.error(err);
-//     }
-// }
-
 async function fetchPrevisao(sensor) {
 
   console.log("🔥 Chamando API com sensor:", sensor);
@@ -445,7 +382,8 @@ async function fetchPrevisao(sensor) {
       <b>Nível atual:</b> ${data.nivel_atual}%<br>
       <b>Taxa média:</b> ${data.taxa_media.toFixed(2)}%/h<br>
       <b>Horas restantes:</b> ${data.horas_restantes.toFixed(2)}h<br>
-      <b>Data estimada:</b> ${new Date(data.data_prevista).toLocaleString()}
+      <b>Data estimada:</b> ${new Date(data.data_prevista).toLocaleString()}<br><br>
+      <i style="color:#aaa">${data.resumo_ia || ''}</i>
     `;
 
   } catch (err) {

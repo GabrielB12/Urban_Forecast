@@ -1,5 +1,4 @@
-from .core import compute_previsao
-
+from .core import compute_previsao, gerar_resumo_ia
 
 class ForecastModel:
 
@@ -12,4 +11,5 @@ class ForecastModel:
             return {"error": "Dados insuficientes para previsão"}
         
         result["data_prevista"] = result["data_prevista"].isoformat()
+        result["resumo_ia"] = gerar_resumo_ia(result)
         return result
