@@ -18,17 +18,18 @@ def home():
     return {"status": "API rodando 🚀"}
 
 
-@app.route("/predict", methods=["POST"])
+@app.route("/predict", methods=["POST", "OPTIONS"])
 def predict():
+    if request.method == "OPTIONS":
+        return '', 200  # responde preflight
+
     try:
         body = request.json
 
-        # modo 1: receber dados direto
         if "data" in body:
             df = pd.DataFrame(body["data"])
             df["created_at"] = pd.to_datetime(df["created_at"])
 
-        # modo 2: buscar do supabase
         elif "sensor_id" in body:
             df = fetch_data(SUPABASE_URL, SUPABASE_KEY, body["sensor_id"])
 
