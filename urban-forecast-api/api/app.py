@@ -18,6 +18,16 @@ def home():
     return {"status": "API rodando 🚀"}
 
 
+@app.route("/debug/<sensor_id>")
+def debug(sensor_id):
+    df = fetch_data(SUPABASE_URL, SUPABASE_KEY, sensor_id)
+    return jsonify({
+        "total_linhas": len(df),
+        "primeiro": str(df["created_at"].iloc[0]) if not df.empty else None,
+        "ultimo": str(df["created_at"].iloc[-1]) if not df.empty else None,
+        "ultimas_5": df[["created_at", "fill_percent"]].tail(5).to_dict(orient="records") if not df.empty else []
+    })
+
 @app.route("/predict", methods=["POST", "OPTIONS"])
 def predict():
     if request.method == "OPTIONS":
