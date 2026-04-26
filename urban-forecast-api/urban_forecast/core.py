@@ -1,5 +1,5 @@
 import pandas as pd
-import google.generativeai as genai
+from google import genai
 import os
 
 from datetime import timezone
@@ -52,8 +52,7 @@ def compute_previsao(df: pd.DataFrame, threshold: float = 90):
 
 def gerar_resumo_ia(resultado: dict) -> str:
     try:
-        genai.configure(api_key=os.environ.get("GEMINI_API_KEY", ""))
-        model = genai.GenerativeModel("gemini-1.5-flash")
+        client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY", ""))
         
         prompt = f"""Você é um assistente de monitoramento de lixeiras urbanas.
 Com base nos dados abaixo, gere um resumo curto e direto (2-3 frases) em português sobre o estado da lixeira e quando deve ser coletada.
@@ -65,8 +64,11 @@ Data estimada para coleta: {resultado['data_prevista']}
 
 Seja objetivo e útil para o operador de coleta."""
 
-        response = model.generate_content(prompt)
+        response = client.models.generate_content(
+            model="gemini-1.5-flash",
+            contents=prompt
+        )
         return response.text
     except Exception as e:
-        print("ERRO gerar_resumo_ia:", type(e).__name__, str(e))  # <-- log detalhado
+        print("ERRO gerar_resumo_ia:", type(e).__name__, str(e))
         return None

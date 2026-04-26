@@ -3,4 +3,4 @@ pandas
 requests
 gunicorn
 flask-cors
-google-generativeai
+google-genai
