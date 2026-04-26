@@ -7,4 +7,9 @@ class ForecastModel:
         self.threshold = threshold
 
     def predict(self, df):
-        return compute_previsao(df, self.threshold)
+        result = compute_previsao(df, self.threshold)
+        if result is None:
+            return {"error": "Dados insuficientes para previsão"}
+        
+        result["data_prevista"] = result["data_prevista"].isoformat()
+        return result
