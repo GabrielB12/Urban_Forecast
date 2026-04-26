@@ -382,7 +382,7 @@ async function fetchPrevisao(sensor) {
       <b>Nível atual:</b> ${data.nivel_atual}%<br>
       <b>Taxa média:</b> ${data.taxa_media.toFixed(2)}%/h<br>
       <b>Horas restantes:</b> ${data.horas_restantes.toFixed(2)}h<br>
-      <b>Data estimada:</b> ${new Date(data.data_prevista).toLocaleString()}<br><br>
+      <b>Data estimada:</b> ${new Date(data.data_prevista).toLocaleString('pt-BR', {timeZone: 'America/Sao_Paulo'})}<br><br>
       <i style="color:#aaa">${data.resumo_ia || ''}</i>
     `;
 

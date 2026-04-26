@@ -1,4 +1,5 @@
 import pandas as pd
+from datetime import datetime, timezone, timedelta
 from groq import Groq
 import os
 
@@ -46,6 +47,10 @@ def compute_previsao(df: pd.DataFrame, threshold: float = 90):
 
 def gerar_resumo_ia(resultado: dict) -> str:
     try:
+        data_utc = datetime.fromisoformat(resultado['data_prevista'])
+        data_sp = data_utc.astimezone(timezone(timedelta(hours=-3)))
+        data_formatada = data_sp.strftime("%d/%m/%Y às %Hh%M")
+        
         client = Groq(api_key=os.environ.get("GROQ_API_KEY", ""))
         
         prompt = f"""Você é um assistente de monitoramento de lixeiras urbanas.
