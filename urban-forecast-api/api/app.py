@@ -1,0 +1,40 @@
+from flask import Flask, request, jsonify
+import pandas as pd
+
+from urban_forecast.pipeline import run_pipeline
+from connectors.supabase import fetch_data
+
+app = Flask(__name__)
+
+SUPABASE_URL = "https://zitresvvjiondhgiuqal.supabase.co"
+SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InppdHJlc3Z2amlvbmRoZ2l1cWFsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIxNTI2MjksImV4cCI6MjA3NzcyODYyOX0.Z_cBFBjyLF77pkVAnd5xMaNM7YX3bdZmqjMUOMZHI9k"
+
+
+@app.route("/")
+def home():
+    return {"status": "API rodando 🚀"}
+
+
+@app.route("/predict", methods=["POST"])
+def predict():
+    try:
+        body = request.json
+
+        # modo 1: receber dados direto
+        if "data" in body:
+            df = pd.DataFrame(body["data"])
+            df["created_at"] = pd.to_datetime(df["created_at"])
+
+        # modo 2: buscar do supabase
+        elif "sensor_id" in body:
+            df = fetch_data(SUPABASE_URL, SUPABASE_KEY, body["sensor_id"])
+
+        else:
+            return jsonify({"error": "Envie 'data' ou 'sensor_id'"}), 400
+
+        result = run_pipeline(df)
+
+        return jsonify(result)
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
