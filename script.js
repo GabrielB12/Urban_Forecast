@@ -419,6 +419,8 @@ async function fetchPrevisao(sensor) {
     const data = await res.json();
     previsoesCache = data;
 
+     console.log("📦 RESPOSTA COMPLETA:", data);
+
     renderPrevisao();
 
   } catch (err) {
