@@ -4,3 +4,6 @@ requests
 gunicorn
 flask-cors
 groq
+scikit-learn
+prophet
+cmdstanpy
