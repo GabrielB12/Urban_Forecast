@@ -11,11 +11,14 @@ def gerar_resumo_ia(resultado: dict) -> str:
 
         client = Groq(api_key=os.environ.get("GROQ_API_KEY", ""))
 
-        prompt = f"""Você é um assistente de monitoramento de lixeiras urbanas...
+        prompt = f"""Você é um assistente de monitoramento de lixeiras urbanas.
+Com base nos dados abaixo, gere um resumo curto e direto (2-3 frases) em português sobre o estado da lixeira e quando deve ser coletada.
 Nível atual: {resultado['nivel_atual']}%
 Taxa: {resultado['taxa_media']:.2f}%/h
 Horas restantes: {resultado['horas_restantes']:.1f}
 Data: {data_formatada}
+
+Seja objetivo e útil para o operador de coleta.
 """
 
         response = client.chat.completions.create(
