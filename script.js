@@ -341,10 +341,60 @@ function safeAttachListeners() {
   }
 }
 
+// async function fetchPrevisao(sensor) {
+
+//   console.log("🔥 Chamando API com sensor:", sensor);
+
+//   const box = document.getElementById("previsaoBox");
+
+//   if (!sensor) {
+//     box.innerHTML = "Selecione uma lixeira.";
+//     return;
+//   }
+
+//   try {
+
+//     console.log("➡️ Enviando request...");
+
+//     const res = await fetch("https://site-lixeira-1.onrender.com/predict", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json"
+//       },
+//       body: JSON.stringify({
+//         sensor_id: sensor
+//       })
+//     });
+
+//     console.log("⬅️ Resposta recebida:", res.status);
+
+
+//     const data = await res.json();
+
+//     console.log("📦 Dados:", data);
+
+//     if (!res.ok || !data) {
+//       box.innerHTML = "Erro na previsão.";
+//       return;
+//     }
+
+//     box.innerHTML = `
+//       <b>Nível atual:</b> ${data.nivel_atual}%<br>
+//       <b>Taxa média:</b> ${data.taxa_media.toFixed(2)}%/h<br>
+//       <b>Horas restantes:</b> ${data.horas_restantes.toFixed(2)}h<br>
+//       <b>Data estimada:</b> ${new Date(data.data_prevista).toLocaleString('pt-BR', {timeZone: 'America/Sao_Paulo'})}<br><br>
+//       <i style="color:#aaa">${data.resumo_ia || ''}</i>
+//     `;
+
+//   } catch (err) {
+//     console.error(err);
+//     box.innerHTML = "Erro ao conectar com a API.";
+//   }
+// }
+
+let previsoesCache = null;
+
 async function fetchPrevisao(sensor) {
-
-  console.log("🔥 Chamando API com sensor:", sensor);
-
   const box = document.getElementById("previsaoBox");
 
   if (!sensor) {
@@ -352,55 +402,68 @@ async function fetchPrevisao(sensor) {
     return;
   }
 
-  try {
+  const res = await fetch("https://site-lixeira-1.onrender.com/predict", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ sensor_id: sensor })
+  });
 
-    console.log("➡️ Enviando request...");
+  const data = await res.json();
+  previsoesCache = data;
 
-    const res = await fetch("https://site-lixeira-1.onrender.com/predict", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        sensor_id: sensor
-      })
-    });
+  renderPrevisao();
+}
 
-    console.log("⬅️ Resposta recebida:", res.status);
+function renderPrevisao() {
+  const modelo = document.getElementById("modeloSelect").value;
+  const data = previsoesCache?.[modelo];
+  const box = document.getElementById("previsaoBox");
 
-
-    const data = await res.json();
-
-    console.log("📦 Dados:", data);
-
-    if (!res.ok || !data) {
-      box.innerHTML = "Erro na previsão.";
-      return;
-    }
-
-    box.innerHTML = `
-      <b>Nível atual:</b> ${data.nivel_atual}%<br>
-      <b>Taxa média:</b> ${data.taxa_media.toFixed(2)}%/h<br>
-      <b>Horas restantes:</b> ${data.horas_restantes.toFixed(2)}h<br>
-      <b>Data estimada:</b> ${new Date(data.data_prevista).toLocaleString('pt-BR', {timeZone: 'America/Sao_Paulo'})}<br><br>
-      <i style="color:#aaa">${data.resumo_ia || ''}</i>
-    `;
-
-  } catch (err) {
-    console.error(err);
-    box.innerHTML = "Erro ao conectar com a API.";
+  if (!data) {
+    box.innerHTML = "Sem previsão para este modelo.";
+    return;
   }
+
+  box.innerHTML = `
+    <b>Modelo:</b> ${modelo}<br>
+    <b>Nível atual:</b> ${data.nivel_atual}%<br>
+    <b>Taxa:</b> ${data.taxa_media ? data.taxa_media.toFixed(2) : '-'}<br>
+    <b>Horas restantes:</b> ${data.horas_restantes.toFixed(2)}h<br>
+    <b>Data:</b> ${new Date(data.data_prevista).toLocaleString('pt-BR')}
+  `;
 }
 
 /* ---------- inicialização segura ---------- */
+// document.addEventListener("DOMContentLoaded", () => {
+//   log("DOMContentLoaded fired");
+//   safeAttachListeners();
+//   populateSensorFilter().then(() => {
+//     refresh();
+//     clearMap();
+//   }).catch(e => { console.error("populateSensorFilter error:", e); });
+//   // polling
+//   if (!window.__lixeiras_polling_interval) {
+//     window.__lixeiras_polling_interval = setInterval(refresh, 5000);
+//   }
+// });
 document.addEventListener("DOMContentLoaded", () => {
   log("DOMContentLoaded fired");
+
   safeAttachListeners();
+
+  // 👇 ADICIONE ISSO AQUI
+  const modeloSelect = document.getElementById("modeloSelect");
+  if (modeloSelect) {
+    modeloSelect.addEventListener("change", renderPrevisao);
+  } else {
+    console.warn("#modeloSelect não encontrado");
+  }
+
   populateSensorFilter().then(() => {
     refresh();
     clearMap();
   }).catch(e => { console.error("populateSensorFilter error:", e); });
-  // polling
+
   if (!window.__lixeiras_polling_interval) {
     window.__lixeiras_polling_interval = setInterval(refresh, 5000);
   }
