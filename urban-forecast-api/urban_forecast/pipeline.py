@@ -1,4 +1,4 @@
-from .models import ForecastModel
+from .core import compute_previsao, compute_previsao_regressao
 
 
 def run_pipeline(df):
