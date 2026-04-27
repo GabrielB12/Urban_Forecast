@@ -70,8 +70,13 @@ def compute_previsao_regressao(df, threshold=90):
 
     coef = model.coef_[0]
 
+    print("DEBUG REGRESSAO:")
+    print("coef:", coef)
+    print("nivel:", nivel)
+    print("dados:", len(df))
+
     if coef <= 0:
-        return None
+        coef = 0.0001  # evita divisão por zero e mantém previsão
 
     horas = (threshold - nivel) / coef
 
