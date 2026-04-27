@@ -4,7 +4,6 @@ from groq import Groq
 import os
 from sklearn.linear_model import LinearRegression
 import numpy as np
-from prophet import Prophet
 
 from datetime import timezone
 
@@ -81,34 +80,6 @@ def compute_previsao_regressao(df, threshold=90):
         "taxa_media": float(coef),
         "horas_restantes": float(horas),
         "data_prevista": df["created_at"].iloc[-1] + pd.to_timedelta(horas, unit="h")
-    }
-
-def compute_previsao_prophet(df, threshold=90):
-    if df.empty:
-        return None
-
-    df = df.copy()
-    df["ds"] = pd.to_datetime(df["created_at"], utc=True)
-    df["y"] = df["fill_percent"]
-
-    model = Prophet()
-    model.fit(df[["ds", "y"]])
-
-    future = model.make_future_dataframe(periods=48, freq="H")
-    forecast = model.predict(future)
-
-    pred = forecast[forecast["yhat"] >= threshold]
-
-    if pred.empty:
-        return None
-
-    data_prevista = pred.iloc[0]["ds"]
-
-    return {
-        "nivel_atual": float(df["y"].iloc[-1]),
-        "taxa_media": None,
-        "horas_restantes": (data_prevista - df["ds"].iloc[-1]).total_seconds() / 3600,
-        "data_prevista": data_prevista
     }
     
 def gerar_resumo_ia(resultado: dict) -> str:
