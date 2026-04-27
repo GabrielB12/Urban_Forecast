@@ -55,6 +55,9 @@ def compute_previsao_regressao(df, threshold=90):
     df["created_at"] = pd.to_datetime(df["created_at"], utc=True)
     df = df.sort_values("created_at")
 
+    cutoff = df["created_at"].max() - pd.Timedelta(hours=48)
+    df = df[df["created_at"] >= cutoff]
+
     # transforma tempo em número
     t0 = df["created_at"].min()
     df["t"] = (df["created_at"] - t0).dt.total_seconds() / 3600
