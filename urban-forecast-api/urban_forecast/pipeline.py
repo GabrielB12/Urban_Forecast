@@ -9,6 +9,7 @@ def run_pipeline(df):
     reg = compute_previsao_regressao(df)
 
     if base:
+        base["data_prevista"] = base["data_prevista"].isoformat()
         base["resumo_ia"] = gerar_resumo_ia(base)
 
     if reg:
