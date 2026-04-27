@@ -301,7 +301,7 @@ function safeAttachListeners() {
           clearMap();
         }
         refresh();
-        isao(val);
+        fetchPrevisao(val);
       });
       sensorFilter.dataset.listenerAttached = "1";
       log("listener -> #sensorFilter");
