@@ -5,10 +5,7 @@ from datetime import timedelta
 
 def gerar_resumo_ia(resultado: dict) -> str:
     try:
-        data_utc = pd.to_datetime(
-            resultado['data_prevista'],
-            utc=True
-        ).isoformat()
+        data_utc = pd.to_datetime(resultado['data_prevista'], utc=True).to_pydatetime()
         data_sp = data_utc - timedelta(hours=3)
         data_formatada = data_sp.strftime("%d/%m/%Y às %Hh%M")
 
