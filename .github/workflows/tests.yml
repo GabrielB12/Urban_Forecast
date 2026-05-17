@@ -1,16 +1,15 @@
-name: Tests
+name: Python Tests
 
 on:
   push:
+    branches:
+      - main
+      - master
   pull_request:
 
 jobs:
   test:
     runs-on: ubuntu-latest
-
-    defaults:
-      run:
-        working-directory: urban-forecast-api
 
     steps:
       - name: Checkout repository
@@ -22,11 +21,11 @@ jobs:
           python-version: "3.12"
 
       - name: Install dependencies
+        working-directory: urban-forecast-api
         run: |
           python -m pip install --upgrade pip
-          pip install pytest
-          pip install pandas requests numpy scikit-learn python-dotenv
+          pip install -r requirements.txt
 
       - name: Run tests
-        run: |
-          pytest
+        working-directory: urban-forecast-api
+        run: pytest
