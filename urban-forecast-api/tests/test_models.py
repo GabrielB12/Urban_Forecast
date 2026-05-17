@@ -14,3 +14,12 @@ def test_base_pipeline():
 
     assert result["baseline"] is not None
     assert result["regressao"] is not None
+
+
+def test_pipeline_empty_dataframe():
+    df = pd.DataFrame(columns=["created_at", "fill_percent"])
+
+    result = run_pipeline(df)
+
+    assert result["baseline"] is None
+    assert result["regressao"] is None
