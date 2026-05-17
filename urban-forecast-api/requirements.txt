@@ -5,3 +5,4 @@ gunicorn
 flask-cors
 groq
 scikit-learn
+pytest
