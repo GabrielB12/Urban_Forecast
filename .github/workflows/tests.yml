@@ -15,17 +15,25 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Show repository structure
+        run: |
+          pwd
+          ls
+          find . -maxdepth 3 -type f
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
       - name: Install dependencies
-        working-directory: urban-forecast-api
         run: |
+          cd urban-forecast-api
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip list
 
       - name: Run tests
-        working-directory: urban-forecast-api
-        run: pytest
+        run: |
+          cd urban-forecast-api
+          pytest -v
