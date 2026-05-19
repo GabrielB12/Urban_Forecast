@@ -1,5 +1,9 @@
 # Urban Forecast
 
+![Tests](https://github.com/GabrielB12/Site_Lixeira/actions/workflows/tests.yml/badge.svg)
+![License](https://img.shields.io/badge/license-MIT-blue)
+![Python](https://img.shields.io/badge/python-3.10+-blue)
+
 Smart bin fill-level prediction system based on IoT sensor data.
 
 ## 📌 Description
