@@ -4,7 +4,6 @@ on:
   push:
     paths:
       - 'paper/**'
-      - '.github/workflows/joss-paper.yml'
   pull_request:
     paths:
       - 'paper/**'
@@ -14,17 +13,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Build JOSS paper
-        uses: openjournals/openjournals-docker@main
-        with:
-          journal: joss
-          paper-path: paper/paper.md
+      - name: Build paper
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}/paper:/data \
+            -e JOURNAL=joss \
+            openjournals/inara
 
       - name: Upload PDF
         uses: actions/upload-artifact@v4
         with:
-          name: joss-paper
+          name: paper-pdf
           path: paper/paper.pdf
