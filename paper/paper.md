@@ -25,7 +25,7 @@ Urban Forecast is an open-source Python library designed to predict fill levels 
 
 The system was developed as part of an ongoing master's research project in the Programa de Pós-Graduação em Ciência da Computação (PPG-CC) at Universidade Federal de São Paulo (UNIFESP).
 
-The architecture integrates embedded devices based on ESP8266 microcontrollers [@esp8266] and ultrasonic sensors capable of monitoring waste levels in real time. Sensor measurements are transmitted to a Supabase database [@supabase] and processed by Urban Forecast to estimate future fill levels and support intelligent waste collection decisions.
+The architecture integrates embedded devices based on ESP8266 microcontrollers [@esp8266] and ultrasonic sensors capable of monitoring waste levels in real time. Sensor measurements are transmitted to a Supabase database [@supabase] and processed by Urban Forecast to estimate future fill levels and support smart waste collection decisions.
 
 The generated predictions can support:
 
@@ -36,34 +36,17 @@ The generated predictions can support:
 
 # Statement of need
 
-Traditional urban waste collection systems commonly operate using static collection schedules, regardless of the actual fill level of waste bins. This approach often results in inefficient routes, unnecessary fuel consumption, increased operational costs, and delayed collection in high-demand areas.
+Traditional urban waste collection systems commonly operate using static collection schedules, regardless of the actual fill level of waste bins. This approach often results in inefficient routes, unnecessary fuel consumption, increased operational costs, and delayed collection in high-demand areas [@abdallah2019].
 
 Recent advances in IoT technologies enable the deployment of smart bins capable of continuously transmitting fill-level measurements. However, converting raw sensor measurements into actionable predictive insights remains a challenge for municipalities, researchers, and smart city initiatives.
 
-Existing forecasting solutions often rely on computationally expensive machine learning models or require complex deployment infrastructures that may not be suitable for lightweight embedded monitoring systems.
+Many forecasting approaches for IoT applications rely on machine learning models and deployment architectures that can impose significant computational and operational requirements, limiting their suitability for lightweight embedded monitoring systems.
 
-Urban Forecast addresses this problem by providing:
+Urban Forecast addresses this problem by providing a lightweight and modular framework for time-series forecasting in smart waste management environments. The framework combines forecasting algorithms, configurable prediction pipelines, and interpretable outputs that support operational decision-making. It is designed for straightforward integration with IoT-based monitoring infrastructures and can optionally generate natural language summaries of prediction results using Large Language Models (LLMs) [@llama2023].
 
-- lightweight forecasting algorithms;
-- modular prediction pipelines;
-- interpretable prediction outputs;
-- easy integration with IoT infrastructures;
-- optional natural language summaries generated using Large Language Models (LLMs) [@llama2023].
+The software is particularly relevant for applications in smart city research, urban analytics, IoT monitoring systems, and waste management optimization. In addition, its accessible architecture makes it suitable for educational and academic environments, where forecasting methods and smart city technologies can be explored and evaluated.
 
-The project is especially useful for:
-
-- smart city research;
-- urban analytics;
-- IoT monitoring systems;
-- waste management optimization;
-- educational and academic environments.
-
-Urban Forecast contributes to the field by:
-
-- providing a lightweight forecasting framework tailored for smart waste monitoring;
-- supporting interpretable forecasting strategies suitable for low-resource environments;
-- integrating IoT sensing, cloud persistence, and AI-assisted explainability in a unified architecture;
-- enabling rapid experimentation for smart city research and educational applications.
+Urban Forecast contributes to the field by offering a forecasting framework specifically tailored to smart waste monitoring scenarios. The project emphasizes lightweight and interpretable forecasting strategies that can operate in resource-constrained environments while integrating IoT sensing, cloud-based data persistence, and AI-assisted explainability within a unified architecture. This combination enables rapid experimentation, reproducible research, and practical deployment in smart city applications.
 
 # State of the field
 
@@ -75,11 +58,8 @@ Machine learning and time-series forecasting approaches have been explored in ur
 
 Urban Forecast focuses on providing a lightweight, modular, and easy-to-integrate forecasting pipeline suitable for both academic research and practical IoT deployments. The software emphasizes interpretability, simplicity, and ease of integration with cloud-based architectures such as Supabase.
 
-Unlike many existing smart waste management solutions that prioritize
-dashboard visualization or complex deep learning architectures,
-Urban Forecast focuses on lightweight and interpretable forecasting
-approaches that can be easily deployed in resource-constrained IoT
-environments.
+Unlike many existing smart waste management solutions that prioritize dashboard visualization or complex deep learning architectures,
+Urban Forecast focuses on lightweight and interpretable forecasting approaches that can be easily deployed in resource-constrained IoT environments.
 
 # Software design
 
@@ -195,7 +175,7 @@ This functionality improves accessibility for non-technical operators and suppor
 
 # Research impact statement
 
-Urban Forecast is currently being used as part of an ongoing master's research project focused on intelligent waste collection systems based on IoT infrastructure and cloud computing.
+Urban Forecast is currently being used as part of an ongoing master's research project focused on smart waste collection systems based on IoT infrastructure and cloud computing.
 
 The project contributes to smart city research by combining:
 
