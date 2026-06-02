@@ -1,0 +1,41 @@
+id,sensor_id,distance,altura_cm,nome,endereco,email_responsavel,threshold_percent,fill_percent,created_at
+1,Lixeira-A1,63,66,Lixeira 1,"Cerro Cora, 914, Vila Madalena, Sao Paulo, SP",resp@exemplo.com,70,5,2026-01-01 08:00:00+00
+2,Lixeira-A1,61,66,Lixeira 1,"Cerro Cora, 914, Vila Madalena, Sao Paulo, SP",resp@exemplo.com,70,8,2026-01-01 10:00:00+00
+3,Lixeira-A1,58,66,Lixeira 1,"Cerro Cora, 914, Vila Madalena, Sao Paulo, SP",resp@exemplo.com,70,12,2026-01-01 12:00:00+00
+4,Lixeira-A1,54,66,Lixeira 1,"Cerro Cora, 914, Vila Madalena, Sao Paulo, SP",resp@exemplo.com,70,18,2026-01-01 14:00:00+00
+5,Lixeira-A1,49,66,Lixeira 1,"Cerro Cora, 914, Vila Madalena, Sao Paulo, SP",resp@exemplo.com,70,26,2026-01-01 16:00:00+00
+6,Lixeira-A1,45,66,Lixeira 1,"Cerro Cora, 914, Vila Madalena, Sao Paulo, SP",resp@exemplo.com,70,32,2026-01-01 18:00:00+00
+7,Lixeira-A1,40,66,Lixeira 1,"Cerro Cora, 914, Vila Madalena, Sao Paulo, SP",resp@exemplo.com,70,39,2026-01-01 20:00:00+00
+8,Lixeira-A1,35,66,Lixeira 1,"Cerro Cora, 914, Vila Madalena, Sao Paulo, SP",resp@exemplo.com,70,47,2026-01-01 22:00:00+00
+9,Lixeira-A1,30,66,Lixeira 1,"Cerro Cora, 914, Vila Madalena, Sao Paulo, SP",resp@exemplo.com,70,55,2026-01-02 00:00:00+00
+10,Lixeira-A1,25,66,Lixeira 1,"Cerro Cora, 914, Vila Madalena, Sao Paulo, SP",resp@exemplo.com,70,62,2026-01-02 02:00:00+00
+11,Lixeira-A1,20,66,Lixeira 1,"Cerro Cora, 914, Vila Madalena, Sao Paulo, SP",resp@exemplo.com,70,70,2026-01-02 04:00:00+00
+12,Lixeira-A1,15,66,Lixeira 1,"Cerro Cora, 914, Vila Madalena, Sao Paulo, SP",resp@exemplo.com,70,77,2026-01-02 06:00:00+00
+13,Lixeira-A1,10,66,Lixeira 1,"Cerro Cora, 914, Vila Madalena, Sao Paulo, SP",resp@exemplo.com,70,85,2026-01-02 08:00:00+00
+14,Lixeira-A1,5,66,Lixeira 1,"Cerro Cora, 914, Vila Madalena, Sao Paulo, SP",resp@exemplo.com,70,92,2026-01-02 10:00:00+00
+15,Lixeira-A2,62,66,Lixeira 2,"Avenida Morumbi, 6340, Morumbi, Sao Paulo, SP",resp@exemplo2.com,70,6,2026-01-01 08:00:00+00
+16,Lixeira-A2,59,66,Lixeira 2,"Avenida Morumbi, 6340, Morumbi, Sao Paulo, SP",resp@exemplo2.com,70,11,2026-01-01 11:00:00+00
+17,Lixeira-A2,56,66,Lixeira 2,"Avenida Morumbi, 6340, Morumbi, Sao Paulo, SP",resp@exemplo2.com,70,15,2026-01-01 14:00:00+00
+18,Lixeira-A2,52,66,Lixeira 2,"Avenida Morumbi, 6340, Morumbi, Sao Paulo, SP",resp@exemplo2.com,70,21,2026-01-01 17:00:00+00
+19,Lixeira-A2,48,66,Lixeira 2,"Avenida Morumbi, 6340, Morumbi, Sao Paulo, SP",resp@exemplo2.com,70,27,2026-01-01 20:00:00+00
+20,Lixeira-A2,43,66,Lixeira 2,"Avenida Morumbi, 6340, Morumbi, Sao Paulo, SP",resp@exemplo2.com,70,35,2026-01-01 23:00:00+00
+21,Lixeira-A2,38,66,Lixeira 2,"Avenida Morumbi, 6340, Morumbi, Sao Paulo, SP",resp@exemplo2.com,70,42,2026-01-02 02:00:00+00
+22,Lixeira-A2,33,66,Lixeira 2,"Avenida Morumbi, 6340, Morumbi, Sao Paulo, SP",resp@exemplo2.com,70,50,2026-01-02 05:00:00+00
+23,Lixeira-A2,28,66,Lixeira 2,"Avenida Morumbi, 6340, Morumbi, Sao Paulo, SP",resp@exemplo2.com,70,58,2026-01-02 08:00:00+00
+24,Lixeira-A2,22,66,Lixeira 2,"Avenida Morumbi, 6340, Morumbi, Sao Paulo, SP",resp@exemplo2.com,70,67,2026-01-02 11:00:00+00
+25,Lixeira-A2,18,66,Lixeira 2,"Avenida Morumbi, 6340, Morumbi, Sao Paulo, SP",resp@exemplo2.com,70,73,2026-01-02 14:00:00+00
+26,Lixeira-A2,12,66,Lixeira 2,"Avenida Morumbi, 6340, Morumbi, Sao Paulo, SP",resp@exemplo2.com,70,82,2026-01-02 17:00:00+00
+27,Lixeira-A2,7,66,Lixeira 2,"Avenida Morumbi, 6340, Morumbi, Sao Paulo, SP",resp@exemplo2.com,70,89,2026-01-02 20:00:00+00
+28,Lixeira-A3,64,66,Lixeira 3,"Avenida Pompeia, 1308, Pompeia, Sao Paulo, SP",resp@exemplo3.com,70,3,2026-01-01 09:00:00+00
+29,Lixeira-A3,60,66,Lixeira 3,"Avenida Pompeia, 1308, Pompeia, Sao Paulo, SP",resp@exemplo3.com,70,9,2026-01-01 13:00:00+00
+30,Lixeira-A3,57,66,Lixeira 3,"Avenida Pompeia, 1308, Pompeia, Sao Paulo, SP",resp@exemplo3.com,70,14,2026-01-01 17:00:00+00
+31,Lixeira-A3,53,66,Lixeira 3,"Avenida Pompeia, 1308, Pompeia, Sao Paulo, SP",resp@exemplo3.com,70,20,2026-01-01 21:00:00+00
+32,Lixeira-A3,49,66,Lixeira 3,"Avenida Pompeia, 1308, Pompeia, Sao Paulo, SP",resp@exemplo3.com,70,26,2026-01-02 01:00:00+00
+33,Lixeira-A3,44,66,Lixeira 3,"Avenida Pompeia, 1308, Pompeia, Sao Paulo, SP",resp@exemplo3.com,70,33,2026-01-02 05:00:00+00
+34,Lixeira-A3,39,66,Lixeira 3,"Avenida Pompeia, 1308, Pompeia, Sao Paulo, SP",resp@exemplo3.com,70,41,2026-01-02 09:00:00+00
+35,Lixeira-A3,34,66,Lixeira 3,"Avenida Pompeia, 1308, Pompeia, Sao Paulo, SP",resp@exemplo3.com,70,48,2026-01-02 13:00:00+00
+36,Lixeira-A3,29,66,Lixeira 3,"Avenida Pompeia, 1308, Pompeia, Sao Paulo, SP",resp@exemplo3.com,70,56,2026-01-02 17:00:00+00
+37,Lixeira-A3,23,66,Lixeira 3,"Avenida Pompeia, 1308, Pompeia, Sao Paulo, SP",resp@exemplo3.com,70,65,2026-01-02 21:00:00+00
+38,Lixeira-A3,18,66,Lixeira 3,"Avenida Pompeia, 1308, Pompeia, Sao Paulo, SP",resp@exemplo3.com,70,73,2026-01-03 01:00:00+00
+39,Lixeira-A3,11,66,Lixeira 3,"Avenida Pompeia, 1308, Pompeia, Sao Paulo, SP",resp@exemplo3.com,70,83,2026-01-03 05:00:00+00
+40,Lixeira-A3,6,66,Lixeira 3,"Avenida Pompeia, 1308, Pompeia, Sao Paulo, SP",resp@exemplo3.com,70,91,2026-01-03 09:00:00+00

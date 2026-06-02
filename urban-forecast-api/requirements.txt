@@ -6,3 +6,5 @@ flask-cors
 groq
 scikit-learn
 pytest
+matplotlib
+scikit-learn
