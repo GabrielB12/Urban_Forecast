@@ -23,7 +23,7 @@ bibliography: paper.bib
 
 Urban Forecast is an open-source Python library designed to predict fill levels in smart waste bins using IoT sensor data. The project provides a lightweight and interpretable forecasting pipeline focused on smart city environments and urban waste management optimization.
 
-The system was developed as part of an ongoing master's research project in the Programa de Pós-Graduação em Ciência da Computação (PPG-CC) at Universidade Federal de São Paulo (UNIFESP).
+The system was developed as part of an ongoing master's research project in the "Programa de Pós-Graduação em Ciência da Computação (PPG-CC)" at Universidade Federal de São Paulo (UNIFESP).
 
 The architecture integrates embedded devices based on ESP8266 microcontrollers [@esp8266] and ultrasonic sensors capable of monitoring waste levels in real time. Sensor measurements are transmitted to a Supabase database [@supabase] and processed by Urban Forecast to estimate future fill levels and support smart waste collection decisions.
 
@@ -59,11 +59,13 @@ Machine learning and time-series forecasting approaches have been explored in ur
 Urban Forecast focuses on providing a lightweight, modular, and easy-to-integrate forecasting pipeline suitable for both academic research and practical IoT deployments. The software emphasizes interpretability, simplicity, and ease of integration with cloud-based architectures such as Supabase.
 
 Unlike many existing smart waste management solutions that prioritize dashboard visualization or complex deep learning architectures,
-Urban Forecast focuses on lightweight and interpretable forecasting approaches that can be easily deployed in resource-constrained IoT environments.
+Urban Forecast focuses on lightweight and interpretable forecasting approaches that can be easily deployed in IoT scenarios with limited computational resources.
 
 # Software design
 
 Urban Forecast was designed using a modular architecture to facilitate experimentation with different forecasting strategies and integration with external systems.
+
+## System architecture
 
 The system architecture consists of:
 
@@ -72,7 +74,9 @@ The system architecture consists of:
 3. A Supabase cloud database used for data persistence;
 4. Urban Forecast as the prediction and analysis layer.
 
-The software is organized into modular components:
+## Software modules
+
+The framework is organized into modular components:
 
 - `baseline.py`: heuristic forecasting model;
 - `regression.py`: linear regression forecasting model;
@@ -80,7 +84,9 @@ The software is organized into modular components:
 - `ia.py`: LLM-based explanation generation;
 - `api/`: REST API integration layer.
 
-Urban Forecast currently implements two lightweight forecasting approaches.
+Urban Forecast currently implements two lightweight forecasting approaches: a heuristic baseline model and a linear regression model.
+
+## Data processing workflow
 
 The forecasting workflow consists of:
 
