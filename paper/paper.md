@@ -128,7 +128,7 @@ Historical sensor measurements were retrieved from the Supabase-based data infra
 
 The forecasting approaches were evaluated using the metrics supported by Urban Forecast, including MAE, RMSE, and MAPE [@hyndman2006].
 
-Table 1 summarizes the global forecasting performance obtained during the evaluation process.
+Table 1 summarizes the global forecasting performance of the evaluated models, showing comparable error levels across MAE, RMSE, and MAPE metrics.
 
 | Model      | MAE   | RMSE  | MAPE  |
 | ---------- | ----- | ----- | ----- |
@@ -139,8 +139,7 @@ The evaluated forecasting approaches achieved comparable performance levels duri
 
 The obtained results indicate that lightweight forecasting approaches can provide useful predictive estimates for smart waste monitoring scenarios without requiring computationally expensive machine learning models or complex deployment infrastructures.
 
-Table 2 presents the forecasting performance separated by monitored
-sensor units.
+Table 2 presents the forecasting performance across individual monitored sensors.
 
 | Sensor     | Model      | MAE   | RMSE  | MAPE  |
 | ---------- | ---------- | ----- | ----- | ----- |
