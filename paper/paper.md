@@ -67,12 +67,7 @@ Urban Forecast was designed using a modular architecture to facilitate experimen
 
 ## System architecture
 
-The system architecture consists of:
-
-1. Smart bins equipped with ultrasonic sensors;
-2. ESP8266 microcontrollers responsible for transmitting measurements;
-3. A Supabase cloud database used for data persistence;
-4. Urban Forecast as the prediction and analysis layer.
+The system architecture consists of smart bins equipped with ultrasonic sensors, ESP8266 microcontrollers responsible for transmitting measurements, a Supabase cloud database used for data persistence, and Urban Forecast as the prediction and analysis layer.
 
 ## Software modules
 
@@ -88,13 +83,7 @@ Urban Forecast currently implements two lightweight forecasting approaches: a he
 
 ## Data processing workflow
 
-The forecasting workflow consists of:
-
-1. collecting fill-level measurements from ultrasonic sensors;
-2. storing sensor data in Supabase;
-3. preprocessing historical measurements;
-4. applying forecasting models;
-5. generating prediction summaries through optional LLM integration.
+The forecasting workflow consists of collecting fill-level measurements from ultrasonic sensors, storing sensor data in Supabase, preprocessing historical measurements, applying forecasting models, and generating prediction summaries through optional LLM integration.
 
 ## Baseline Average Rate Model
 
