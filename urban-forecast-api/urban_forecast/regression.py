@@ -34,10 +34,10 @@ def compute_regression(df: pd.DataFrame, threshold: float = 90):
     horas = (threshold - nivel) / coef
 
     return {
-        "nivel_atual": float(nivel),
-        "taxa_media": float(coef),
-        "horas_restantes": float(horas),
-        "data_prevista": (
+        "current_fill_level": float(nivel),
+        "average_rate": float(coef),
+        "remaining_hours": float(horas),
+        "predicted_date": (
             df["created_at"].iloc[-1] + pd.to_timedelta(horas, unit="h")
         ).isoformat()
     }

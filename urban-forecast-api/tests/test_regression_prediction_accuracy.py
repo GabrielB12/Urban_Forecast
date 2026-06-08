@@ -22,7 +22,7 @@ def test_regression_prediction_accuracy():
     assert result is not None
 
     # expected fill rate: 10% per hour
-    assert abs(result["taxa_media"] - 10) < 0.01
+    assert abs(result["average_rate"] - 10) < 0.01
 
     # remaining time expected: 5h until threshold=90%
-    assert abs(result["horas_restantes"] - 5) < 0.01
+    assert abs(result["remaining_hours"] - 5) < 0.01

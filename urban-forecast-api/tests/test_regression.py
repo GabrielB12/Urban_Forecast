@@ -11,7 +11,7 @@ def test_regression_linear_growth():
     result = compute_regression(df)
 
     assert result is not None
-    assert result["taxa_media"] > 0
+    assert result["average_rate"] > 0
 
 
 def test_regression_constant_values():
@@ -34,4 +34,4 @@ def test_threshold_prediction():
     result = compute_regression(df)
 
     assert result is not None
-    assert result["data_prevista"] is not None
+    assert result["predicted_date"] is not None

@@ -23,10 +23,10 @@ def test_baseline_prediction_accuracy():
     assert result is not None
 
     # expected average fill rate: 10% per hour
-    assert abs(result["taxa_media"] - 10) < 0.01
+    assert abs(result["average_rate"] - 10) < 0.01
 
     # current level should be 40%
-    assert abs(result["nivel_atual"] - 40) < 0.01
+    assert abs(result["current_fill_level"] - 40) < 0.01
 
     # remaining time expected: 5h until threshold=90%
-    assert abs(result["horas_restantes"] - 5) < 0.01
+    assert abs(result["remaining_hours"] - 5) < 0.01

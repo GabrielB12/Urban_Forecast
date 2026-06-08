@@ -11,8 +11,8 @@ def test_baseline_average_rate():
     result = compute_baseline(df)
 
     assert result is not None
-    assert "taxa_media" in result
-    assert result["taxa_media"] > 0
+    assert "average_rate" in result
+    assert result["average_rate"] > 0
 
 
 def test_baseline_remaining_time():
@@ -24,5 +24,5 @@ def test_baseline_remaining_time():
     result = compute_baseline(df)
 
     assert result is not None
-    assert "horas_restantes" in result
-    assert result["horas_restantes"] >= 0
+    assert "remaining_hours" in result
+    assert result["remaining_hours"] >= 0

@@ -67,7 +67,7 @@ for sensor_id in df["sensor_id"].unique():
         if baseline_result is not None:
 
             pred_hours = baseline_result[
-                "horas_restantes"
+                "remaining_hours"
             ]
 
             results.append({
@@ -86,7 +86,7 @@ for sensor_id in df["sensor_id"].unique():
         if regression_result is not None:
 
             pred_hours = regression_result[
-                "horas_restantes"
+                "remaining_hours"
             ]
 
             results.append({

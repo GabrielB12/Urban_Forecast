@@ -27,10 +27,10 @@ def compute_baseline(df: pd.DataFrame, threshold: float = 90):
     horas = (threshold - nivel) / taxa
 
     return {
-        "nivel_atual": float(nivel),
-        "taxa_media": float(taxa),
-        "horas_restantes": float(horas),
-        "data_prevista": (
+        "current_fill_level": float(nivel),
+        "average_rate": float(taxa),
+        "remaining_hours": float(horas),
+        "predicted_date": (
             ultimo["created_at"] + pd.to_timedelta(horas, unit="h")
         ).isoformat()
     }

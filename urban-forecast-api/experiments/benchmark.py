@@ -30,12 +30,12 @@ real_hours = (
 # baseline
 baseline_result = compute_baseline(train)
 
-baseline_hours = baseline_result["horas_restantes"]
+baseline_hours = baseline_result["remaining_hours"]
 
 # regression
 regression_result = compute_regression(train)
 
-regression_hours = regression_result["horas_restantes"]
+regression_hours = regression_result["remaining_hours"]
 
 # métricas
 models = ["Baseline", "Regression"]
