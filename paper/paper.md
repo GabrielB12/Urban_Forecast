@@ -27,12 +27,7 @@ The system was developed as part of an ongoing master's research project in the 
 
 The architecture integrates embedded devices based on ESP8266 microcontrollers [@esp8266] and ultrasonic sensors capable of monitoring waste levels in real time. Sensor measurements are transmitted to a Supabase database [@supabase] and processed by Urban Forecast to estimate future fill levels and support smart waste collection decisions.
 
-The generated predictions can support:
-
-- optimization of waste collection routes;
-- reduction of operational costs;
-- prevention of overflow events;
-- smarter allocation of collection resources.
+The generated predictions can support waste collection route optimization, reduction of operational costs, prevention of overflow events, and more efficient allocation of collection resources.
 
 # Statement of need
 
@@ -40,7 +35,7 @@ Traditional urban waste collection systems commonly operate using static collect
 
 Recent advances in IoT technologies enable the deployment of smart bins capable of continuously transmitting fill-level measurements. However, converting raw sensor measurements into actionable predictive insights remains a challenge for municipalities, researchers, and smart city initiatives.
 
-Many forecasting approaches for IoT applications rely on machine learning models and deployment architectures that can impose significant computational and operational requirements, limiting their suitability for lightweight embedded monitoring systems.
+Many forecasting approaches for IoT applications rely on machine learning models and deployment architectures that can impose significant computational and operational requirements, limiting their suitability for lightweight embedded monitoring systems [@ahmed2022].
 
 Urban Forecast addresses this problem by providing a lightweight and modular framework for time-series forecasting in smart waste management environments. The framework combines forecasting algorithms, configurable prediction pipelines, and interpretable outputs that support operational decision-making. It is designed for straightforward integration with IoT-based monitoring infrastructures and can optionally generate natural language summaries of prediction results using Large Language Models (LLMs) [@llama2023].
 
@@ -65,11 +60,9 @@ Urban Forecast focuses on lightweight and interpretable forecasting approaches t
 
 Urban Forecast was designed using a modular architecture to facilitate experimentation with different forecasting strategies and integration with external systems.
 
-## System architecture
+The software receives historical time-series data, performs data preparation and forecasting, evaluates prediction quality using standard forecasting metrics, and can optionally generate natural language summaries through LLM integration.
 
-The system architecture consists of smart bins equipped with ultrasonic sensors, ESP8266 microcontrollers responsible for transmitting measurements, a Supabase cloud database used for data persistence, and Urban Forecast as the prediction and analysis layer.
-
-## Software modules
+![Architecture of the Urban Forecast framework. Historical time-series data are processed through forecasting and evaluation modules, producing prediction outputs and optional LLM-based summaries.](diagram.svg)
 
 The framework is organized into modular components:
 
@@ -79,33 +72,22 @@ The framework is organized into modular components:
 - `ia.py`: LLM-based explanation generation;
 - `api/`: REST API integration layer.
 
-Urban Forecast currently implements two lightweight forecasting approaches: a heuristic baseline model and a linear regression model.
+Urban Forecast currently implements two lightweight forecasting approaches designed for smart waste monitoring scenarios. The selected methods represent different forecasting strategies while maintaining low computational requirements and straightforward interpretability, characteristics that are particularly important in IoT-based environments.
 
-## Data processing workflow
+The forecasting workflow consists of collecting fill-level measurements from ultrasonic sensors, storing the data in Supabase, preprocessing historical observations, applying forecasting models, and optionally generating natural language summaries through LLM integration.
 
-The forecasting workflow consists of collecting fill-level measurements from ultrasonic sensors, storing sensor data in Supabase, preprocessing historical measurements, applying forecasting models, and generating prediction summaries through optional LLM integration.
 
 ## Baseline Average Rate Model
 
-A heuristic model that estimates filling speed using recent historical variation.
+The Baseline Average Rate model is a heuristic forecasting approach that estimates future fill levels based on the recent rate of change observed in historical measurements. The method assumes that the short-term filling behavior of a waste bin can be approximated by its most recent filling trend, making it suitable for scenarios where computational simplicity and rapid execution are required [@hyndman2021].
 
-Advantages include:
-
-- low computational cost;
-- fast execution;
-- easy interpretability;
-- suitability for edge or low-resource environments.
+Because the model relies on straightforward calculations rather than parameter optimization or model training, it presents a low computational overhead and can be applied in resource-constrained environments. In addition, its transparent formulation facilitates interpretation of the generated forecasts and supports practical deployment in IoT-based monitoring systems.
 
 ## Linear Regression Model
 
-A regression-based approach used to estimate long-term filling tendencies [@james2021].
+The Linear Regression model estimates future fill levels by fitting a linear relationship between time and observed fill percentages [@james2021]. This approach captures long-term filling tendencies and provides a simple statistical framework for forecasting when waste accumulation follows an approximately linear trend.
 
-Advantages include:
-
-- smoother predictions;
-- stable trend estimation;
-- improved robustness against noisy measurements;
-- easy integration with historical datasets.
+Compared to purely heuristic approaches, linear regression can produce smoother forecasts and reduce the influence of short-term fluctuations or noisy sensor measurements. The model remains computationally efficient while providing a more formal representation of temporal trends, making it suitable for exploratory forecasting studies and smart waste monitoring applications.
 
 # Evaluation metrics
 
@@ -171,12 +153,7 @@ This functionality improves accessibility for non-technical operators and suppor
 
 Urban Forecast is currently being used as part of an ongoing master's research project focused on smart waste collection systems based on IoT infrastructure and cloud computing.
 
-The project contributes to smart city research by combining:
-
-- embedded IoT sensing;
-- cloud-based data persistence;
-- lightweight forecasting models;
-- AI-assisted explainability.
+The project contributes to smart city research by combining embedded IoT sensing, cloud-based data persistence, lightweight forecasting models, and AI-assisted explainability within a unified framework.
 
 The modular design allows the software to be adapted for educational purposes, research experiments, and real-world urban monitoring systems.
 
