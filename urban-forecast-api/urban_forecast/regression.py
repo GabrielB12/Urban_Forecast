@@ -30,6 +30,14 @@ def compute_regression(df: pd.DataFrame, threshold: float = 90):
 
     if coef <= 0 or np.isnan(coef):
         return None
+    
+    if nivel >= threshold:
+        return {
+            "current_fill_level": float(nivel),
+            "average_rate": float(coef),
+            "remaining_hours": 0.0,
+            "predicted_date": df["created_at"].iloc[-1].isoformat()
+        }
 
     horas = (threshold - nivel) / coef
 

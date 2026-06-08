@@ -24,6 +24,14 @@ def compute_baseline(df: pd.DataFrame, threshold: float = 90):
     ultimo = df.iloc[-1]
     nivel = ultimo["fill_percent"]
 
+    if nivel >= threshold:
+        return {
+            "current_fill_level": float(nivel),
+            "average_rate": float(taxa),
+            "remaining_hours": 0.0,
+            "predicted_date": ultimo["created_at"].isoformat()
+        }
+
     horas = (threshold - nivel) / taxa
 
     return {
