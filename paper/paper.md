@@ -145,9 +145,12 @@ Additional experimental artifacts, including generated CSV reports, benchmark sc
 
 # AI-assisted explainability
 
-Urban Forecast optionally integrates LLMs through the Groq API to automatically generate natural language summaries of forecasting results.
+Urban Forecast optionally integrates Large Language Models (LLMs) through the Groq API to automatically generate natural language summaries of the forecasting results. This capability translates numerical outputs, forecast trends, and estimated filling trajectories into concise textual explanations that can be more easily interpreted by non-technical users.
 
-This functionality improves accessibility for non-technical operators and supports explainable decision-making in urban management systems.
+The explainability layer is designed to complement quantitative forecasting metrics rather than replace them. By providing human-readable descriptions of predicted waste accumulation patterns, the system can support operational decision-making and facilitate communication between technical and administrative stakeholders.
+
+This functionality is particularly useful in smart city environments, where waste management operators may benefit from rapid interpretation of forecasting outputs without requiring expertise in time-series analysis or statistical modeling. The integration leverages the Groq platform for low-latency inference and access to modern LLMs, enabling real-time generation of explanatory summaries [@groq2024].
+
 
 # Research impact statement
 
