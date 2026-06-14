@@ -19,7 +19,7 @@ def compute_baseline(df: pd.DataFrame, threshold: float = 90):
     if valid.empty:
         return None
 
-    taxa = (valid["delta_pos"] / valid["delta_horas"]).mean()
+    taxa = (valid["delta_pos"] / valid["delta_horas"]).median()
 
     ultimo = df.iloc[-1]
     nivel = ultimo["fill_percent"]
