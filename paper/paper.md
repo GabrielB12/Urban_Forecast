@@ -12,6 +12,8 @@ authors:
   - name: Gabriel Bianchi e Silva
     affiliation: 1
     corresponding: true
+  - name: Luiz Eduardio Galvão Martins
+    affiliation: 1
 affiliations:
   - name: Programa de Pós-Graduação em Ciência da Computação (PPG-CC), Universidade Federal de São Paulo (UNIFESP), Brazil
     index: 1
