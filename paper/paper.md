@@ -83,6 +83,8 @@ The forecasting workflow consists of collecting fill-level measurements from ult
 
 The Baseline Average Rate model is a heuristic forecasting approach that estimates future fill levels based on the recent rate of change observed in historical measurements. The method assumes that the short-term filling behavior of a waste bin can be approximated by its most recent filling trend, making it suitable for scenarios where computational simplicity and rapid execution are required [@hyndman2021].
 
+The model estimates the recent filling rate using the median of observed rate-of-change values within a 48-hour window, reducing sensitivity to sensor noise and isolated outlier readings while preserving the model's simplicity and interpretability.
+
 Because the model relies on straightforward calculations rather than parameter optimization or model training, it presents a low computational overhead and can be applied in resource-constrained environments. In addition, its transparent formulation facilitates interpretation of the generated forecasts and supports practical deployment in IoT-based monitoring systems.
 
 ## Linear Regression Model
@@ -106,44 +108,53 @@ These metrics allow quantitative evaluation of forecasting accuracy in smart was
 
 # Experimental evaluation
 
-The experimental evaluation was conducted using real-world fill-level measurements collected from IoT-enabled smart waste bins connected through ESP8266 microcontrollers and ultrasonic sensors.
+The experimental dataset contains 180 observations generated from three simulated smart waste bins based on fill-level dynamics observed in the associated IoT monitoring system based on ESP8266 microcontrollers and ultrasonic sensors, with 60 measurements per sensor.
 
-Historical sensor measurements were retrieved from the Supabase-based data infrastructure used in the associated research project. The evaluation focused on estimating the remaining time until waste bins reached a predefined fill threshold.
+Historical sensor measurements were retrieved from the Supabase-based data infrastructure used in the associated research project. To better approximate real-world fill-level dynamics, the dataset incorporates a non-linear filling trend, moderate measurement noise, and sporadic discrete waste-disposal events that produce localized jumps in fill level. This evaluation setup is intended to avoid overly idealized linear dynamics while preserving an underlying filling tendency that can be exploited by both forecasting approaches.
 
-The forecasting approaches were evaluated using the metrics supported by Urban Forecast, including MAE, RMSE, and MAPE [@hyndman2006].
+The evaluation focused on estimating the remaining time until waste bins reached a predefined fill threshold. For each sensor, predictions were generated using a walk-forward scheme: at each step, the model was trained on all observations up to a given point and evaluated against the next time at which the fill level crossed the threshold. Predictions corresponding to remaining times greater than 72 hours were discarded to avoid unstable long-horizon estimates.
 
-Table 1 summarizes the global forecasting performance of the evaluated models, showing comparable error levels across MAE, RMSE, and MAPE metrics.
+The forecasting approaches were evaluated using the metrics supported by Urban Forecast, including MAE, RMSE, and MAPE [@hyndman2006]. MAPE values are reported as decimal fractions.
 
-| Model      | MAE   | RMSE  | MAPE  |
-| ---------- | ----- | ----- | ----- |
-| Baseline   | 2.553 | 3.222 | 0.248 |
-| Regression | 2.588 | 3.306 | 0.244 |
+Table 1 summarizes the global forecasting performance of the evaluated models, including the number of evaluated predictions (N) per model. The results show that the regression-based approach achieved lower errors across all evaluation metrics.
 
-The evaluated forecasting approaches achieved comparable performance levels during the experimental evaluation [@willmott2005]. The heuristic baseline model presented slightly lower MAE and RMSE values, while the regression-based approach achieved a marginally lower MAPE value.
+| Model      | N  | MAE   | RMSE   | MAPE  |
+| ---------- | -- | ----- | ------ | ----- |
+| Baseline   | 78 | 9.195 | 11.665 | 0.281 |
+| Regression | 78 | 3.034 | 4.072  | 0.120 |
 
-The obtained results indicate that lightweight forecasting approaches can provide useful predictive estimates for smart waste monitoring scenarios without requiring computationally expensive machine learning models or complex deployment infrastructures.
+The evaluated forecasting approaches presented different performance levels during the experimental evaluation. The regression-based approach achieved substantially lower errors compared to the heuristic baseline, reducing MAE from 9.195 hours to 3.034 hours and RMSE from 11.665 hours to 4.072 hours.
 
-Table 2 presents the forecasting performance across individual monitored sensors.
+The obtained performance suggests that modeling the temporal evolution of the fill level provides more accurate remaining-time estimates than relying only on the median historical filling rate.
 
-| Sensor     | Model      | MAE   | RMSE  | MAPE  |
-| ---------- | ---------- | ----- | ----- | ----- |
-| A1 | Baseline   | 2.462 | 2.933 | 0.319 |
-| A1 | Regression | 2.288 | 2.799 | 0.288 |
-| A2 | Baseline   | 2.392 | 3.165 | 0.239 |
-| A2 | Regression | 2.498 | 3.310 | 0.246 |
-| A3 | Baseline   | 2.805 | 3.537 | 0.187 |
-| A3 | Regression | 2.977 | 3.743 | 0.196 |
+This evaluation demonstrates that lightweight forecasting approaches can provide accurate predictive estimates for smart waste monitoring scenarios while avoiding computationally expensive models and complex deployment infrastructures.
 
-The per-sensor evaluation demonstrates that the forecasting approaches maintain relatively stable performance across different monitored waste bins. Small variations between sensors are expected due to distinct fill-rate behaviors, environmental conditions, and usage patterns.
+Table 2 presents the forecasting performance across individual monitored sensors, including the number of evaluated predictions (N) per sensor and model.
+
+| Sensor | Model | N  | MAE    | RMSE   | MAPE  |
+| ------ | ----- | -- | ------ | ------ | ----- |
+| A1 | Baseline | 36 | 7.854 | 9.199  | 0.248 |
+| A1 | Regression | 36 | 2.987 | 4.429  | 0.082 |
+| A2 | Baseline | 24 | 7.846 | 9.749  | 0.260 |
+| A2 | Regression | 24 | 2.814 | 3.227  | 0.139 |
+| A3 | Baseline | 18 | 13.677 | 17.139 | 0.374 |
+| A3 | Regression | 18 | 3.423 | 4.326  | 0.168 |
+
+The per-sensor evaluation confirms the consistent advantage of the regression-based approach across all monitored waste bins. Differences in N across sensors arise from the walk-forward evaluation scheme combined with the 72-hour horizon limit: sensors with longer sampling intervals produce fewer valid evaluation points within this horizon.
 
 Figure 1 presents the relationship between predicted and real remaining time values for both evaluated forecasting approaches.
 
-![Comparison between predicted and real remaining time estimates for the evaluated forecasting approaches.\label{fig}](forecast_plot.png)
+![Comparison between predicted and real remaining time estimates for the evaluated forecasting approaches.\label{fig1}](forecast_plot.png)
 
-Most predictions remained close to the ideal prediction line, demonstrating reasonable agreement between predicted and observed remaining time values under real IoT monitoring conditions [@chai2014].
+The regression-based approach presented predictions closer to the ideal prediction line, indicating better agreement between estimated and observed remaining time values under the evaluated monitoring conditions.
+
+Figure 2 presents the mean absolute error of both forecasting approaches as a function of the training window size, i.e., the number of historical observations available at the time of prediction.
+
+![Mean absolute error of the evaluated forecasting approaches as a function of the training window size.\label{fig2}](error_vs_window.png)
+
+The regression-based approach converges to low and stable error values (typically below 5 hours) once approximately 20 training observations are available, whereas the baseline approach remains considerably more volatile across a wider range of training window sizes, with errors occasionally exceeding 15 hours. Both approaches converge to similarly low error levels once the training window approaches the full sensor history, suggesting that the regression model reaches a stable predictive regime earlier than the baseline model.
 
 Additional experimental artifacts, including generated CSV reports, benchmark scripts, and visualization outputs, are publicly available in the project repository to support reproducibility and transparency.
-
 
 # AI-assisted explainability
 
