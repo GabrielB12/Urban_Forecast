@@ -14,7 +14,7 @@ from urban_forecast.regression import compute_regression
 THRESHOLD = 70
 
 df = pd.read_csv(
-    "experiments/v_distancias_com_fill_rows.csv"
+    "experiments/v_distancias_com_fill_rows_100.csv"
 )
 
 df["created_at"] = pd.to_datetime(
@@ -70,7 +70,14 @@ for sensor_id in df["sensor_id"].unique():
 
     print(f"\nProcessando {sensor_id}")
 
+    discarded_short = 0
+    discarded_no_future = 0
+    discarded_invalid_hours = 0
+    discarded_too_long = 0
+
     for i in range(5, len(sensor_df) - 1):
+
+        threshold = sensor_df["threshold_percent"].iloc[0]
 
         train = sensor_df.iloc[:i]
 
@@ -84,11 +91,12 @@ for sensor_id in df["sensor_id"].unique():
                 sensor_df["created_at"] > last_time
             ) &
             (
-                sensor_df["fill_percent"] >= THRESHOLD
+                sensor_df["fill_percent"] >= threshold
             )
         ]
 
         if future_rows.empty:
+            discarded_no_future += 1
             continue
 
         real_threshold_time = future_rows.iloc[0][
@@ -101,12 +109,17 @@ for sensor_id in df["sensor_id"].unique():
 
         # ignora valores inválidos
         if real_hours <= 0:
+            discarded_invalid_hours += 1
+            continue
+
+        if real_hours > 72:
+            discarded_too_long += 1
             continue
 
         # BASELINE
         baseline_result = compute_baseline(
             train,
-            threshold=THRESHOLD
+            threshold=threshold
         )
 
         if baseline_result is not None:
@@ -120,6 +133,7 @@ for sensor_id in df["sensor_id"].unique():
                 results.append({
                     "model": "Baseline",
                     "sensor_id": sensor_id,
+                    "train_size": i,
                     "real_hours": real_hours,
                     "predicted_hours": pred_hours
                 })
@@ -127,7 +141,7 @@ for sensor_id in df["sensor_id"].unique():
         # REGRESSION
         regression_result = compute_regression(
             train,
-            threshold=THRESHOLD
+            threshold=threshold
         )
 
         if regression_result is not None:
@@ -141,9 +155,17 @@ for sensor_id in df["sensor_id"].unique():
                 results.append({
                     "model": "Regression",
                     "sensor_id": sensor_id,
+                    "train_size": i,
                     "real_hours": real_hours,
                     "predicted_hours": pred_hours
                 })
+
+    print(
+        f"  Descartados -> curto: {discarded_short}, "
+        f"sem futuro: {discarded_no_future}, "
+        f"horas inválidas: {discarded_invalid_hours}, "
+        f"> 72h: {discarded_too_long}"
+    )
 
 results_df = pd.DataFrame(results)
 
@@ -179,6 +201,7 @@ for model in results_df["model"].unique():
 
     summary.append({
         "Model": model,
+        "N": len(model_df),
         "MAE": mae,
         "RMSE": rmse,
         "MAPE": mape
@@ -230,6 +253,7 @@ for sensor_id in results_df["sensor_id"].unique():
         sensor_summary.append({
             "sensor_id": sensor_id,
             "model": model,
+            "N": len(model_data),
             "MAE": mae,
             "RMSE": rmse,
             "MAPE": mape
@@ -248,7 +272,7 @@ sensor_summary_df.to_csv(
 )
 
 # =========================
-# GRÁFICO
+# GRÁFICO: PREVISTO vs REAL
 # =========================
 
 plt.figure(figsize=(8, 5))
@@ -296,3 +320,37 @@ plt.savefig(
     "experiments/forecast_plot.png",
     dpi=200
 )
+
+# =========================
+# ERRO vs TAMANHO DO TREINO
+# =========================
+
+results_df["abs_error"] = (
+    results_df["real_hours"] - results_df["predicted_hours"]
+).abs()
+
+error_by_size = (
+    results_df
+    .groupby(["model", "train_size"])["abs_error"]
+    .mean()
+    .reset_index()
+)
+
+plt.figure(figsize=(8, 5))
+
+for model in error_by_size["model"].unique():
+    model_df = error_by_size[error_by_size["model"] == model]
+    plt.plot(
+        model_df["train_size"],
+        model_df["abs_error"],
+        marker="o",
+        label=model
+    )
+
+plt.xlabel("Training window size (n. of points)")
+plt.ylabel("Mean Absolute Error (hours)")
+plt.title("Forecast error vs. training window size")
+plt.grid(True, alpha=0.3)
+plt.legend()
+plt.tight_layout()
+plt.savefig("experiments/error_vs_window.png", dpi=200)
