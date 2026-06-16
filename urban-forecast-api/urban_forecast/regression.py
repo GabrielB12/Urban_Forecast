@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import HuberRegressor
+
 
 def compute_regression(df: pd.DataFrame, threshold: float = 90):
     if df.empty:
@@ -22,7 +23,7 @@ def compute_regression(df: pd.DataFrame, threshold: float = 90):
     X = df[["t"]].values
     y = df["fill_percent"].values
 
-    model = LinearRegression()
+    model = HuberRegressor()
     model.fit(X, y)
 
     coef = model.coef_[0]
