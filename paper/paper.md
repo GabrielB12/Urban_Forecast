@@ -12,7 +12,7 @@ authors:
   - name: Gabriel Bianchi e Silva
     affiliation: 1
     corresponding: true
-  - name: Luiz Eduardio Galvão Martins
+  - name: Luiz Eduardo Galvão Martins
     affiliation: 1
 affiliations:
   - name: Programa de Pós-Graduação em Ciência da Computação (PPG-CC), Universidade Federal de São Paulo (UNIFESP), Brazil
@@ -23,13 +23,17 @@ bibliography: paper.bib
 
 # Summary
 
-Urban Forecast is an open-source Python library designed to predict fill levels in smart waste bins using IoT sensor data. The project provides a lightweight and interpretable forecasting pipeline focused on smart city environments and urban waste management optimization.
+Urban Forecast is an open-source Python library that provides an end-to-end forecasting pipeline for smart waste bin monitoring using IoT sensor data.
 
-The system was developed as part of an ongoing master's research project in the "Programa de Pós-Graduação em Ciência da Computação (PPG-CC)" at Universidade Federal de São Paulo (UNIFESP).
+Combining lightweight forecasting models, evaluation metrics, REST API integration, and optional LLM-based explanations, the software supports smart city applications and urban waste management optimization.
 
-The architecture integrates embedded devices based on ESP8266 microcontrollers [@esp8266] and ultrasonic sensors capable of monitoring waste levels in real time. Sensor measurements are transmitted to a Supabase database [@supabase] and processed by Urban Forecast to estimate future fill levels and support smart waste collection decisions.
+Designed with interpretability, simplicity, and ease of deployment in mind, Urban Forecast is suitable for both academic research and practical IoT environments.
 
-The generated predictions can support waste collection route optimization, reduction of operational costs, prevention of overflow events, and more efficient allocation of collection resources.
+This system was developed as part of an ongoing master's research project in the Programa de Pós-Graduação em Ciência da Computação (PPG-CC) at Universidade Federal de São Paulo (UNIFESP).
+
+Its architecture integrates embedded devices based on ESP8266 microcontrollers [@esp8266] and ultrasonic sensors capable of monitoring waste levels in real time. Sensor measurements are transmitted to a Supabase database [@supabase] and processed by Urban Forecast to estimate future fill levels and support smart waste collection decisions.
+
+These predictions can assist waste collection route optimization, reduce operational costs, prevent overflow events, and improve the allocation of collection resources.
 
 # Statement of need
 
@@ -39,7 +43,7 @@ Recent advances in IoT technologies enable the deployment of smart bins capable 
 
 Many forecasting approaches for IoT applications rely on machine learning models and deployment architectures that can impose significant computational and operational requirements, limiting their suitability for lightweight embedded monitoring systems [@ahmed2022].
 
-Urban Forecast addresses this problem by providing a lightweight and modular framework for time-series forecasting in smart waste management environments. The framework combines forecasting algorithms, configurable prediction pipelines, and interpretable outputs that support operational decision-making. It is designed for straightforward integration with IoT-based monitoring infrastructures and can optionally generate natural language summaries of prediction results using Large Language Models (LLMs) [@llama2023].
+Urban Forecast addresses this problem by providing an end-to-end forecasting framework specifically designed for smart waste monitoring. Unlike general-purpose forecasting libraries, the framework integrates IoT data ingestion, lightweight forecasting models, configurable prediction pipelines, evaluation metrics, and REST API support within a unified architecture. In addition, Urban Forecast can optionally generate natural language summaries of prediction results using Large Language Models (LLMs) [@llama2023].
 
 The software is particularly relevant for applications in smart city research, urban analytics, IoT monitoring systems, and waste management optimization. In addition, its accessible architecture makes it suitable for educational and academic environments, where forecasting methods and smart city technologies can be explored and evaluated.
 
