@@ -53,14 +53,11 @@ Urban Forecast contributes to the field by offering a forecasting framework spec
 
 Smart waste management systems have become an important research topic within smart city initiatives [@iot2019]. Several IoT-based architectures have been proposed for monitoring urban waste containers using sensors, wireless communication, and cloud-based infrastructures [@smartCities].
 
-Many existing systems focus primarily on data collection and monitoring dashboards while offering limited predictive capabilities. Forecasting future fill levels can significantly improve route optimization and collection efficiency, especially in large urban environments.
+General-purpose forecasting libraries such as Prophet and StatsForecast provide powerful forecasting capabilities for a wide range of applications. However, these libraries are not specifically designed for smart waste monitoring workflows and typically require additional integration layers for IoT data ingestion, REST APIs, or AI-assisted interpretation. Similarly, IoT platforms such as ThingsBoard focus primarily on device connectivity and dashboard visualization, offering limited forecasting support.
 
 Machine learning and time-series forecasting approaches have been explored in urban monitoring applications, but many solutions require complex infrastructures or rely on computationally expensive models that are difficult to deploy in resource-constrained environments.
 
-Urban Forecast focuses on providing a lightweight, modular, and easy-to-integrate forecasting pipeline suitable for both academic research and practical IoT deployments. The software emphasizes interpretability, simplicity, and ease of integration with cloud-based architectures such as Supabase.
-
-Unlike many existing smart waste management solutions that prioritize dashboard visualization or complex deep learning architectures,
-Urban Forecast focuses on lightweight and interpretable forecasting approaches that can be easily deployed in IoT scenarios with limited computational resources.
+Urban Forecast complements these existing tools by providing a lightweight and modular forecasting pipeline specifically designed for smart waste monitoring scenarios. The framework emphasizes interpretability, simplicity, and ease of integration with cloud-based architectures such as Supabase, enabling rapid experimentation and practical deployment in IoT environments with limited computational resources.
 
 # Software design
 
@@ -81,7 +78,6 @@ The framework is organized into modular components:
 Urban Forecast currently implements two lightweight forecasting approaches designed for smart waste monitoring scenarios. The selected methods represent different forecasting strategies while maintaining low computational requirements and straightforward interpretability, characteristics that are particularly important in IoT-based environments.
 
 The forecasting workflow consists of collecting fill-level measurements from ultrasonic sensors, storing the data in Supabase, preprocessing historical observations, applying forecasting models, and optionally generating natural language summaries through LLM integration.
-
 
 ## Baseline Average Rate Model
 
@@ -167,7 +163,6 @@ Urban Forecast optionally integrates Large Language Models (LLMs) through the Gr
 The explainability layer is designed to complement quantitative forecasting metrics rather than replace them. By providing human-readable descriptions of predicted waste accumulation patterns, the system can support operational decision-making and facilitate communication between technical and administrative stakeholders.
 
 This functionality is particularly useful in smart city environments, where waste management operators may benefit from rapid interpretation of forecasting outputs without requiring expertise in time-series analysis or statistical modeling. The integration leverages the Groq platform for low-latency inference and access to modern LLMs, enabling real-time generation of explanatory summaries [@groq2024].
-
 
 # Research impact statement
 
