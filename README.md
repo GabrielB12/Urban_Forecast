@@ -47,6 +47,7 @@ The system can generate automatic natural language summaries using LLM (Groq), m
 ## 🚀 Installation
 
 ```bash
+cd urban-forecast-api
 pip install -r requirements.txt
 ```
 
@@ -75,14 +76,14 @@ print(result)
 ```json
 {
   "baseline": {
-    "current_level": 55,
+    "current_fill_level": 55,
     "average_rate": 5.0,
     "remaining_hours": 7.0,
     "predicted_date": "2024-01-01T17:00:00",
     "ai_summary": "..."
   },
   "regression": {
-    "current_level": 55,
+    "current_fill_level": 55,
     "average_rate": 4.8,
     "remaining_hours": 7.3,
     "predicted_date": "2024-01-01T17:18:00",
