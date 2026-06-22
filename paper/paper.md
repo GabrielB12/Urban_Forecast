@@ -99,8 +99,8 @@ Urban Forecast supports commonly used forecasting metrics for evaluating predict
 
 The current implementation supports:
 
-- Mean Absolute Error (MAE), which measures the average magnitude of prediction errors;
-- Root Mean Squared Error (RMSE), which penalizes larger prediction deviations more strongly;
+- Mean Absolute Error (MAE), which measures the average magnitude of prediction errors [@willmott2005];
+- Root Mean Squared Error (RMSE), which penalizes larger prediction deviations more strongly [@chai2014];
 - Mean Absolute Percentage Error (MAPE), which measures prediction error relative to the observed values.
 
 These metrics allow quantitative evaluation of forecasting accuracy in smart waste monitoring scenarios and support comparison between heuristic and regression-based approaches [@hyndman2006].
@@ -172,10 +172,6 @@ The project contributes to smart city research by combining embedded IoT sensing
 
 The modular design allows the software to be adapted for educational purposes, research experiments, and real-world urban monitoring systems.
 
-The software is currently being integrated into an experimental smart
-waste monitoring infrastructure developed during the author's master's
-research project.
-
 # Example usage
 
 ```python
@@ -186,7 +182,7 @@ df = pd.DataFrame({
     "created_at": pd.date_range(
         start="2024-01-01",
         periods=10,
-        freq="H"
+        freq="h"
     ),
     "fill_percent": [10,15,20,25,30,35,40,45,50,55]
 })
@@ -197,9 +193,9 @@ print(result)
 ```
 
 # AI usage disclosure
-All technical content, software implementation details, experimental results, and project information presented in this manuscript were produced, reviewed, and validated by the author.
+All technical content, software implementation details, experimental results, and project information presented in this manuscript were produced, reviewed, and validated by the authors.
 
 # Acknowledgements
-The author thanks the Programa de Pós-Graduação em Ciência da Computação (PPG-CC) and Universidade Federal de São Paulo (UNIFESP) for supporting the associated research project.
+The authors thanks the Programa de Pós-Graduação em Ciência da Computação (PPG-CC) and Universidade Federal de São Paulo (UNIFESP) for supporting the associated research project.
 
 # References
