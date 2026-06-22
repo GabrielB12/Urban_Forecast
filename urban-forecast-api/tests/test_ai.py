@@ -7,6 +7,6 @@ def test_ai_summary_generation():
         "remaining_hours": 10
     }
 
-    result = gerar_resumo_ia(data)
+    result = generate_ai_summary(data)
 
     assert result is None or isinstance(result, str)
