@@ -7,7 +7,7 @@ def generate_ai_summary(result: dict) -> str:
     try:
         data_utc = pd.to_datetime(result['predicted_date'], utc=True).to_pydatetime()
         data_sp = data_utc - timedelta(hours=3)
-        formatted_timestamp = data_sp.strftime("%d/%m/%Y às %Hh%M")
+        formatted_timestamp = data_sp.strftime("%d/%m/%Y at %Hh%M")
 
         client = Groq(api_key=os.environ.get("GROQ_API_KEY", ""))
 

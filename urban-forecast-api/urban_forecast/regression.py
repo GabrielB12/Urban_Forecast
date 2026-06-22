@@ -27,26 +27,26 @@ def compute_regression(df: pd.DataFrame, threshold: float = 90):
     model.fit(X, y)
 
     coef = model.coef_[0]
-    nivel = df["fill_percent"].iloc[-1]
+    fill_percent = df["fill_percent"].iloc[-1]
 
     if coef <= 0 or np.isnan(coef):
         return None
     
-    if nivel >= threshold:
+    if fill_percent >= threshold:
         return {
-            "current_fill_level": float(nivel),
+            "current_fill_level": float(fill_percent),
             "average_rate": float(coef),
             "remaining_hours": 0.0,
             "predicted_date": df["created_at"].iloc[-1].isoformat()
         }
 
-    horas = (threshold - nivel) / coef
+    hours = (threshold - fill_percent) / coef
 
     return {
-        "current_fill_level": float(nivel),
+        "current_fill_level": float(fill_percent),
         "average_rate": float(coef),
-        "remaining_hours": float(horas),
+        "remaining_hours": float(hours),
         "predicted_date": (
-            df["created_at"].iloc[-1] + pd.to_timedelta(horas, unit="h")
+            df["created_at"].iloc[-1] + pd.to_timedelta(hours, unit="h")
         ).isoformat()
     }
