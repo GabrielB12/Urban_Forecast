@@ -10,10 +10,10 @@ def test_base_pipeline():
     result = run_pipeline(df)
 
     assert "baseline" in result
-    assert "regressao" in result
+    assert "regression" in result
 
     assert result["baseline"] is not None
-    assert result["regressao"] is not None
+    assert result["regression"] is not None
 
 
 def test_pipeline_empty_dataframe():
@@ -22,4 +22,4 @@ def test_pipeline_empty_dataframe():
     result = run_pipeline(df)
 
     assert result["baseline"] is None
-    assert result["regressao"] is None
+    assert result["regression"] is None

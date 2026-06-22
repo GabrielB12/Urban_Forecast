@@ -8,12 +8,12 @@ def run_pipeline(df):
     regression = compute_regression(df)
 
     if baseline:
-        baseline["resumo_ia"] = generate_ai_summary(baseline)
+        baseline["ai_summary"] = generate_ai_summary(baseline)
 
     if regression:
-        regression["resumo_ia"] = generate_ai_summary(regression)
+        regression["ai_summary"] = generate_ai_summary(regression)
 
     return {
         "baseline": baseline,
-        "regressao": regression
+        "regression": regression
     }

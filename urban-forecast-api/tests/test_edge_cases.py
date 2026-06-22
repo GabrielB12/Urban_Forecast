@@ -18,7 +18,7 @@ def test_unsorted_timestamps():
 
     assert result is not None
     assert "baseline" in result
-    assert "regressao" in result
+    assert "regression" in result
 
 
 def test_single_point():
@@ -31,7 +31,7 @@ def test_single_point():
 
     assert result is not None
     assert "baseline" in result
-    assert "regressao" in result
+    assert "regression" in result
 
 
 def test_negative_values():
@@ -44,4 +44,4 @@ def test_negative_values():
 
     assert result is not None
     assert "baseline" in result
-    assert "regressao" in result
+    assert "regression" in result
