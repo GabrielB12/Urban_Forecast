@@ -1,6 +1,6 @@
 # Urban Forecast
 
-![Tests](https://github.com/GabrielB12/Site_Lixeira/actions/workflows/tests.yml/badge.svg)
+![Tests](https://github.com/GabrielB12/Urban_Forecast/actions/workflows/tests.yml/badge.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 ![Python](https://img.shields.io/badge/python-3.10+-blue)
 
@@ -59,7 +59,7 @@ from urban_forecast.pipeline import run_pipeline
 import pandas as pd
 
 df = pd.DataFrame({
-    "created_at": pd.date_range(start="2024-01-01", periods=10, freq="H"),
+    "created_at": pd.date_range(start="2024-01-01", periods=10, freq="h"),
     "fill_percent": [10,15,20,25,30,35,40,45,50,55]
 })
 
