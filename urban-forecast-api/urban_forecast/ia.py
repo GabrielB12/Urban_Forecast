@@ -3,11 +3,11 @@ import os
 import pandas as pd
 from datetime import timedelta
 
-def generate_ai_summary(resultado: dict) -> str:
+def generate_ai_summary(result: dict) -> str:
     try:
         data_utc = pd.to_datetime(resultado['predicted_date'], utc=True).to_pydatetime()
         data_sp = data_utc - timedelta(hours=3)
-        data_formatada = data_sp.strftime("%d/%m/%Y às %Hh%M")
+        formatted_timestamp = data_sp.strftime("%d/%m/%Y às %Hh%M")
 
         client = Groq(api_key=os.environ.get("GROQ_API_KEY", ""))
 
@@ -17,7 +17,7 @@ def generate_ai_summary(resultado: dict) -> str:
             Current fill level: {result["current_level"]:.1f}%
             Fill rate: {result["rate"]:.3f}%/h
             Remaining hours: {result["hours_remaining"]:.1f}
-            Predicted date: {result["predicted_date"]}
+            Predicted date: {formatted_timestamp}
             Be concise and useful for waste collection operators.
             """
 
