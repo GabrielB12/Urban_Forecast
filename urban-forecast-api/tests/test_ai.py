@@ -1,4 +1,4 @@
-from urban_forecast.ia import gerar_resumo_ia
+from urban_forecast.ia import generate_ai_summary
 
 
 def test_ai_summary_generation():
