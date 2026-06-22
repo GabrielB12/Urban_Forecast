@@ -3,7 +3,7 @@ import os
 import pandas as pd
 from datetime import timedelta
 
-def gerar_resumo_ia(resultado: dict) -> str:
+def generate_ai_summary(resultado: dict) -> str:
     try:
         data_utc = pd.to_datetime(resultado['predicted_date'], utc=True).to_pydatetime()
         data_sp = data_utc - timedelta(hours=3)
@@ -11,15 +11,15 @@ def gerar_resumo_ia(resultado: dict) -> str:
 
         client = Groq(api_key=os.environ.get("GROQ_API_KEY", ""))
 
-        prompt = f"""Você é um assistente de monitoramento de lixeiras urbanas.
-Com base nos dados abaixo, gere um resumo curto e direto (2-3 frases) em português sobre o estado da lixeira e quando deve ser coletada.
-Nível atual: {resultado['current_fill_level']}%
-Taxa: {resultado['average_rate']:.2f}%/h
-Horas restantes: {resultado['remaining_hours']:.1f}
-Data: {data_formatada}
-
-Seja objetivo e útil para o operador de coleta.
-"""
+        prompt = f"""
+            You are an urban waste monitoring assistant.
+            Based on the data below, generate a short and direct summary (2–3 sentences) describing the current bin status and the estimated collection time.
+            Current fill level: {result["current_level"]:.1f}%
+            Fill rate: {result["rate"]:.3f}%/h
+            Remaining hours: {result["hours_remaining"]:.1f}
+            Predicted date: {result["predicted_date"]}
+            Be concise and useful for waste collection operators.
+            """
 
         response = client.chat.completions.create(
             model="llama-3.1-8b-instant",
