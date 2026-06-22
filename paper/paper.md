@@ -41,7 +41,7 @@ Traditional urban waste collection systems commonly operate using static collect
 
 Recent advances in IoT technologies enable the deployment of smart bins capable of continuously transmitting fill-level measurements. However, converting raw sensor measurements into actionable predictive insights remains a challenge for municipalities, researchers, and smart city initiatives.
 
-Many forecasting approaches for IoT applications rely on machine learning models and deployment architectures that can impose significant computational and operational requirements, limiting their suitability for lightweight embedded monitoring systems [@ahmed2022].
+Many forecasting approaches for IoT applications rely on machine learning models or deployment architectures that may introduce additional computational and operational complexity, potentially limiting their suitability for lightweight embedded monitoring systems [@ahmed2022].
 
 Urban Forecast addresses this problem by providing an end-to-end forecasting framework specifically designed for smart waste monitoring. Unlike general-purpose forecasting libraries, the framework integrates IoT data ingestion, lightweight forecasting models, configurable prediction pipelines, evaluation metrics, and REST API support within a unified architecture. In addition, Urban Forecast can optionally generate natural language summaries of prediction results using Large Language Models (LLMs) [@llama2023].
 
