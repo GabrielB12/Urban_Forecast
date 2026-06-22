@@ -4,7 +4,9 @@
 ![License](https://img.shields.io/badge/license-MIT-blue)
 ![Python](https://img.shields.io/badge/python-3.10+-blue)
 
-Smart bin fill-level prediction system based on IoT sensor data.
+An open-source Python library that provides lightweight forecasting pipelines for smart waste bin monitoring using IoT sensor data.
+
+Urban Forecast combines forecasting models, evaluation metrics, REST APIs, and optional LLM-based explanations to support smart city applications.
 
 ## 📌 Description
 
@@ -20,7 +22,7 @@ The system uses two forecasting models:
 
 ### 🔵 Baseline (Average Rate)
 
-Calculates the fill rate based on recent data variation (last 48 hours).
+Calculates the fill rate based on recent data variation (last 96 hours).
 
 * Simple and fast
 * Sensitive to recent changes
