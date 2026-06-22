@@ -68,7 +68,7 @@ Urban Forecast was designed using a modular architecture to facilitate experimen
 
 The software receives historical time-series data, performs data preparation and forecasting, evaluates prediction quality using standard forecasting metrics, and can optionally generate natural language summaries through LLM integration.
 
-![Architecture of the Urban Forecast framework. Historical time-series data are processed through forecasting and evaluation modules, producing prediction outputs and optional LLM-based summaries.](diagram.png)
+![Architecture of the Urban Forecast framework. Historical time-series data are processed through forecasting and evaluation modules, producing prediction outputs and optional LLM-based summaries.](diagram.jpg)
 
 The framework is organized into modular components:
 
