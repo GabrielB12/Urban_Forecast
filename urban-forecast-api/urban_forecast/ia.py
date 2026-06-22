@@ -14,9 +14,9 @@ def generate_ai_summary(result: dict) -> str:
         prompt = f"""
             You are an urban waste monitoring assistant.
             Based on the data below, generate a short and direct summary (2–3 sentences) describing the current bin status and the estimated collection time.
-            Current fill level: {result["current_level"]:.1f}%
-            Fill rate: {result["rate"]:.3f}%/h
-            Remaining hours: {result["hours_remaining"]:.1f}
+            Current fill level: {result["current_fill_level"]:.1f}%
+            Fill rate: {result["average_rate"]:.3f}%/h
+            Remaining hours: {result["remaining_hours"]:.1f}
             Predicted date: {formatted_timestamp}
             Be concise and useful for waste collection operators.
             """
