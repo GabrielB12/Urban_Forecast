@@ -1,6 +1,6 @@
 from .baseline import compute_baseline
 from .regression import compute_regression
-from .ia import gerar_resumo_ia
+from .ia import generate_ai_summary
 
 def run_pipeline(df):
 
@@ -8,10 +8,10 @@ def run_pipeline(df):
     regression = compute_regression(df)
 
     if baseline:
-        baseline["resumo_ia"] = gerar_resumo_ia(baseline)
+        baseline["resumo_ia"] = generate_ai_summary(baseline)
 
     if regression:
-        regression["resumo_ia"] = gerar_resumo_ia(regression)
+        regression["resumo_ia"] = generate_ai_summary(regression)
 
     return {
         "baseline": baseline,
