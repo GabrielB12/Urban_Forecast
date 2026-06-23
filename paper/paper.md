@@ -142,13 +142,13 @@ Table 2 presents the forecasting performance across individual monitored sensors
 
 The per-sensor evaluation confirms the consistent advantage of the regression-based approach across all monitored waste bins. Sensor A3 exhibited the highest baseline error among the three sensors, suggesting that its underlying fill-level dynamics were comparatively less amenable to the simple rate-based heuristic, while the regression-based approach remained robust to this variation. Differences in N across sensors arise from the walk-forward evaluation scheme combined with the 72-hour horizon limit: sensors with longer sampling intervals produce fewer valid evaluation points within this horizon.
 
-Figure 1 presents the relationship between predicted and real remaining time values for both evaluated forecasting approaches.
+Figure 2 presents the relationship between predicted and real remaining time values for both evaluated forecasting approaches.
 
 ![Comparison between predicted and real remaining time estimates for the evaluated forecasting approaches.\label{fig1}](forecast_plot.png)
 
 The regression-based approach presented predictions closer to the ideal prediction line, indicating better agreement between estimated and observed remaining time values under the evaluated monitoring conditions.
 
-Figure 2 presents the mean absolute error of both forecasting approaches as a function of the training window size, i.e., the number of historical observations available at the time of prediction.
+Figure 3 presents the mean absolute error of both forecasting approaches as a function of the training window size, i.e., the number of historical observations available at the time of prediction.
 
 ![Mean absolute error of the evaluated forecasting approaches as a function of the training window size.\label{fig2}](error_vs_window.png)
 
