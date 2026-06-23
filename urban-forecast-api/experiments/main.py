@@ -22,17 +22,17 @@ df["created_at"] = pd.to_datetime(
     utc=True
 )
 
-# ordenação
+# sorting
 df = df.sort_values(
     ["sensor_id", "created_at"]
 )
 
-# remove timestamps duplicados
+# remove duplicated timestamps
 df = df.drop_duplicates(
     subset=["sensor_id", "created_at"]
 )
 
-# remove leituras muito próximas (<5min)
+# remove readings that are too close
 df["time_diff"] = (
     df.groupby("sensor_id")["created_at"]
     .diff()
@@ -64,7 +64,7 @@ for sensor_id in df["sensor_id"].unique():
         "created_at"
     )
 
-    # mínimo de dados
+    # minimum data
     if len(sensor_df) < 8:
         continue
 
@@ -85,7 +85,7 @@ for sensor_id in df["sensor_id"].unique():
             "created_at"
         ].iloc[-1]
 
-        # procura o próximo threshold FUTURO
+        # looks for the next future threshold
         future_rows = sensor_df[
             (
                 sensor_df["created_at"] > last_time
@@ -107,7 +107,7 @@ for sensor_id in df["sensor_id"].unique():
             real_threshold_time - last_time
         ).total_seconds() / 3600
 
-        # ignora valores inválidos
+        # invalid values
         if real_hours <= 0:
             discarded_invalid_hours += 1
             continue
@@ -173,7 +173,7 @@ print("\nTotal de previsões:")
 print(len(results_df))
 
 # =========================
-# MÉTRICAS GLOBAIS
+# GLOBAL METRICS
 # =========================
 
 summary = []
@@ -218,7 +218,7 @@ summary_df.to_csv(
 )
 
 # =========================
-# MÉTRICAS POR SENSOR
+# METRICS PER SENSOR
 # =========================
 
 sensor_summary = []
@@ -272,7 +272,7 @@ sensor_summary_df.to_csv(
 )
 
 # =========================
-# GRÁFICO: PREVISTO vs REAL
+# GRAPH: CALCULATED vs REAL
 # =========================
 
 plt.figure(figsize=(8, 5))
@@ -322,7 +322,7 @@ plt.savefig(
 )
 
 # =========================
-# ERRO vs TAMANHO DO TREINO
+# ERROR vs TRAIN SIZE
 # =========================
 
 results_df["abs_error"] = (

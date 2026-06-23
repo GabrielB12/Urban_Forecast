@@ -15,10 +15,10 @@ df = pd.read_csv("experiments/dataset.csv")
 
 df["created_at"] = pd.to_datetime(df["created_at"])
 
-# treino
+# train
 train = df.iloc[:-3]
 
-# valor real
+# real value
 last_train_time = train["created_at"].iloc[-1]
 
 threshold_row = df[df["fill_percent"] >= 90].iloc[0]
@@ -37,7 +37,7 @@ regression_result = compute_regression(train)
 
 regression_hours = regression_result["remaining_hours"]
 
-# métricas
+# metrics
 models = ["Baseline", "Regression"]
 
 predictions = [
@@ -91,7 +91,7 @@ results.to_csv(
     index=False
 )
 
-# gráfico
+# graph
 plt.figure(figsize=(6,4))
 
 plt.bar(

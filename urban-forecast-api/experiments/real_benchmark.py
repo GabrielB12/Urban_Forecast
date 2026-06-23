@@ -138,7 +138,7 @@ summary_df.to_csv(
     index=False
 )
 
-# gráfico
+# graph
 plt.figure(figsize=(8,5))
 
 for model in results_df["model"].unique():

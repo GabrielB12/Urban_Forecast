@@ -19,26 +19,26 @@ def compute_baseline(df: pd.DataFrame, threshold: float = 90):
     if valid.empty:
         return None
 
-    taxa = (valid["delta_pos"] / valid["delta_horas"]).median()
+    median = (valid["delta_pos"] / valid["delta_horas"]).median()
 
     last = df.iloc[-1]
-    nivel = last["fill_percent"]
+    fill_level = last["fill_percent"]
 
-    if nivel >= threshold:
+    if fill_level >= threshold:
         return {
-            "current_fill_level": float(nivel),
-            "average_rate": float(taxa),
+            "current_fill_level": float(fill_level),
+            "average_rate": float(median),
             "remaining_hours": 0.0,
             "predicted_date": last["created_at"].isoformat()
         }
 
-    horas = (threshold - nivel) / taxa
+    hours = (threshold - fill_level) / median
 
     return {
-        "current_fill_level": float(nivel),
-        "average_rate": float(taxa),
-        "remaining_hours": float(horas),
+        "current_fill_level": float(fill_level),
+        "average_rate": float(median),
+        "remaining_hours": float(hours),
         "predicted_date": (
-            last["created_at"] + pd.to_timedelta(horas, unit="h")
+            last["created_at"] + pd.to_timedelta(hours, unit="h")
         ).isoformat()
     }
