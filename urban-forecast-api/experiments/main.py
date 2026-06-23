@@ -351,6 +351,13 @@ plt.xlabel("Training window size (n. of points)")
 plt.ylabel("Mean Absolute Error (hours)")
 plt.title("Forecast error vs. training window size")
 plt.grid(True, alpha=0.3)
+plt.axhline(
+    y=0,
+    color="black",
+    linestyle="--",
+    linewidth=1,
+    label="Perfect prediction (MAE = 0)"
+)
 plt.legend()
 plt.tight_layout()
 plt.savefig("experiments/error_vs_window.png", dpi=200)
